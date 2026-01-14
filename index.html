@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <title>Ashraf Ali Emon</title>
+  <title>Mohammed Ashraf Ali Emon</title>
 
   <style>
     body {
@@ -10,9 +10,10 @@
       background: black;
       color: white;
       font-family: Arial, sans-serif;
+      text-align: center;
     }
 
-    /* Menu button */
+    /* ===== Top Right Menu ===== */
     .menu {
       position: fixed;
       top: 15px;
@@ -22,7 +23,6 @@
       z-index: 1000;
     }
 
-    /* Menu items */
     .menu-items {
       display: none;
       position: absolute;
@@ -31,7 +31,7 @@
       border-radius: 8px;
       margin-top: 10px;
       min-width: 140px;
-      overflow: hidden;
+      text-align: left;
     }
 
     .menu-items a {
@@ -50,17 +50,14 @@
       display: block;
     }
 
-    h1 {
-      text-align: center;
-      margin-top: 80px;
-    }
-
-    .logo {
+    /* ===== Avatar ===== */
+    .avatar {
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      background: #222;
-      margin: 20px auto;
+      background: red;      /* লাল গোল */
+      color: black;         /* কালো A */
+      margin: 40px auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -72,7 +69,7 @@
 
 <body>
 
-  <!-- ☰ Menu -->
+  <!-- Menu -->
   <div class="menu">
     ≡
     <div class="menu-items">
@@ -83,9 +80,12 @@
     </div>
   </div>
 
+  <!-- Content -->
   <h1>Mohammed Ashraf Ali Emon</h1>
 
-  <div class="logo">A</div>
+  <div class="avatar">A</div>
+
+  <p>এটি আমার প্রথম ওয়েবসাইট 😊</p>
 
 </body>
 </html>
