@@ -2,14 +2,59 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <title>Ashraf Ali Emon</title>
+  <title>Ashraf Ali Emon</title><style>
+.menu {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.menu-items {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: #222;
+  border-radius: 8px;
+  margin-top: 10px;
+  min-width: 140px;
+}
+
+.menu-items a {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+}
+
+.menu-items a:hover {
+  background: #444;
+}
+
+.menu:hover .menu-items {
+  display: block;
+}
+  </style>
 </head>
 
-<body style="background-color:black; color:white; text-align:center; font-family:Arial;">
+<body style="background-color:black; color:white; text-align:center; font-family:Arial;"><div class="menu">
+  
 
   <h1>Mohammed Ashraf Ali Emon</h1>
 
-  <div style="
+  <div style="<div class="menu">
+  ☰
+  <div class="menu-items">
+    <a href="#">Home</a>
+    <a href="#">PDF</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  </div>
     width:200px;
     height:200px;
     border-radius:50%;
