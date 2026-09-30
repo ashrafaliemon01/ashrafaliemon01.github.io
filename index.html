@@ -1,1349 +1,1335 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ashraf ali emon.com</title>
+<title>Calculator & Converter</title>
 
 <style>
-
 *{
-    box-sizing:border-box;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
 }
 
 body{
-    margin:0;
-    background:#000;
-    color:white;
-    font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#000;
+  color:#fff;
+  min-height:100vh;
 }
 
-/* ================= HEADER ================= */
+.app{
+  max-width:600px;
+  margin:auto;
+  min-height:100vh;
+  background:#000;
+}
 
-.header{
-    height:65px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    border-bottom:1px solid #222;
-    font-size:20px;
-    font-weight:bold;
+/* TOP BAR */
+.topbar{
+  height:75px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  border-bottom:1px solid #111;
+}
+
+.tabs{
+  display:flex;
+  gap:35px;
+  font-size:24px;
+  font-weight:bold;
+}
+
+.tab{
+  color:#555;
+  cursor:pointer;
+}
+
+.tab.active{
+  color:white;
 }
 
 .menu{
-    position:absolute;
-    right:18px;
-    font-size:32px;
-    cursor:pointer;
+  position:absolute;
+  right:18px;
+  top:25px;
+  font-size:28px;
+  cursor:pointer;
 }
 
-/* ================= HOME ================= */
-
-.page{
-    display:none;
+/* MENU */
+.menuBox{
+  position:absolute;
+  right:15px;
+  top:65px;
+  width:190px;
+  background:#202020;
+  border-radius:18px;
+  padding:10px;
+  display:none;
+  z-index:100;
+  box-shadow:0 10px 30px #000;
 }
 
-.page.active{
-    display:block;
+.menuBox button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:white;
+  text-align:left;
+  padding:15px;
+  font-size:17px;
+  border-radius:12px;
 }
 
-.home{
-    width:94%;
-    max-width:600px;
-    margin:auto;
-    padding:25px 0 40px;
+.menuBox button:hover{
+  background:#333;
 }
 
-.profile{
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.avatar{
-    width:105px;
-    height:105px;
-    border-radius:50%;
-    background:#ff0808;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin:auto;
-    font-size:45px;
-    font-weight:bold;
-}
-
-/* ================= OPTION CARDS ================= */
-
-.options{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-}
-
-.option{
-    min-height:105px;
-    background:linear-gradient(
-        135deg,
-        #151515,
-        #080808
-    );
-
-    border:1px solid #292929;
-    border-radius:22px;
-
-    display:flex;
-    align-items:center;
-
-    padding:18px 20px;
-
-    cursor:pointer;
-
-    transition:
-        transform .2s,
-        border-color .2s,
-        background .2s;
-}
-
-.option:active{
-    transform:scale(.98);
-}
-
-.option:hover{
-    border-color:#555;
-    background:#171717;
-}
-
-.option-icon{
-    width:65px;
-    height:65px;
-
-    border-radius:18px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:#202020;
-
-    font-size:32px;
-
-    margin-right:17px;
-}
-
-.option-content{
-    flex:1;
-    text-align:left;
-}
-
-.option-title{
-    font-size:23px;
-    font-weight:bold;
-    margin-bottom:7px;
-}
-
-.option-description{
-    color:#999;
-    font-size:14px;
-}
-
-.arrow{
-    font-size:32px;
-    color:#aaa;
-}
-
-/* ================= FUTURE OPTION ================= */
-
-.future{
-    border-style:dashed;
-    opacity:.85;
-}
-
-.future .option-icon{
-    color:#aaa;
-}
-
-/* ================= APP PAGES ================= */
-
-.app{
-    width:94%;
-    max-width:550px;
-    margin:auto;
-    padding:20px 0 50px;
-}
-
-.back{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-
-    background:#171717;
-    border:1px solid #333;
-
-    color:white;
-
-    padding:10px 16px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    margin-bottom:20px;
-
-    font-size:16px;
-}
-
-.app-title{
-    font-size:28px;
-    margin-bottom:20px;
-}
-
-/* ================= CALCULATOR ================= */
-
-.calculator{
-    background:#111;
-    border:1px solid #333;
-    border-radius:18px;
-    padding:15px;
-}
-
+/* DISPLAY */
 .display{
-    width:100%;
-    height:75px;
-
-    background:#000;
-    color:white;
-
-    border:1px solid #444;
-    border-radius:12px;
-
-    padding:10px;
-
-    text-align:right;
-
-    font-size:30px;
-
-    margin-bottom:12px;
+  min-height:270px;
+  padding:25px 25px 10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:flex-end;
+  overflow:hidden;
 }
 
+.expression{
+  color:#777;
+  font-size:24px;
+  min-height:40px;
+  word-break:break-all;
+  text-align:right;
+}
+
+.result{
+  font-size:38px;
+  font-weight:bold;
+  margin-top:20px;
+  word-break:break-all;
+  text-align:right;
+}
+
+/* BUTTONS */
 .buttons{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:8px;
+  padding:15px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
 }
 
-.buttons button{
-    height:62px;
-
-    border:0;
-    border-radius:12px;
-
-    background:#292929;
-    color:white;
-
-    font-size:21px;
-
-    cursor:pointer;
+.btn{
+  height:75px;
+  border:0;
+  border-radius:25px;
+  background:#252525;
+  color:white;
+  font-size:28px;
+  cursor:pointer;
 }
 
-.buttons button:active{
-    transform:scale(.96);
+.btn:active{
+  transform:scale(.95);
 }
 
 .operator{
-    background:#b40000 !important;
+  color:#ff8a00;
 }
 
 .equal{
-    background:#126fd0 !important;
+  background:#ff8500;
+  color:white;
 }
 
-.clear{
-    background:#555 !important;
+/* CONVERTER */
+.converter{
+  display:none;
+  padding:20px;
 }
 
-/* ================= HISTORY ================= */
-
-.history-box{
-    margin-top:20px;
-
-    background:#111;
-
-    border:1px solid #333;
-
-    border-radius:15px;
-
-    padding:15px;
+.converterGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px 10px;
+  padding-top:25px;
 }
 
-.history-title{
-    font-size:20px;
-    margin-bottom:12px;
+.converterItem{
+  text-align:center;
+  cursor:pointer;
+  padding:15px 5px;
+  border-radius:18px;
 }
 
-.history-item{
-    padding:12px 5px;
-
-    border-bottom:1px solid #333;
-
-    text-align:left;
+.converterItem:hover{
+  background:#171717;
 }
 
-.history-item:last-child{
-    border-bottom:0;
+.icon{
+  font-size:38px;
+  margin-bottom:12px;
 }
 
-.history-delete{
-    float:right;
-
-    background:#b00000;
-
-    border:0;
-
-    color:white;
-
-    padding:5px 9px;
-
-    border-radius:6px;
+.converterItem span{
+  font-size:16px;
 }
 
-/* ================= NOTES ================= */
-
-.note-input{
-    width:100%;
-
-    background:#111;
-
-    color:white;
-
-    border:1px solid #444;
-
-    border-radius:12px;
-
-    padding:14px;
-
-    font-size:16px;
-
-    margin-bottom:12px;
+/* CONVERTER SCREEN */
+.converterScreen{
+  display:none;
+  padding:20px;
 }
 
-textarea{
-    min-height:180px;
-    resize:vertical;
+.back{
+  font-size:30px;
+  cursor:pointer;
+  margin-bottom:20px;
 }
 
-.save{
-    width:100%;
-
-    background:#126fd0;
-
-    color:white;
-
-    border:0;
-
-    border-radius:12px;
-
-    padding:15px;
-
-    font-size:18px;
-
-    cursor:pointer;
+.converterTitle{
+  font-size:27px;
+  font-weight:bold;
+  margin-bottom:25px;
 }
 
-.note{
-    background:#111;
-
-    border:1px solid #333;
-
-    border-radius:15px;
-
-    padding:15px;
-
-    margin-top:15px;
-
-    text-align:left;
+.inputBox{
+  margin-bottom:20px;
 }
 
-.note-title{
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:10px;
+.inputBox label{
+  display:block;
+  color:#aaa;
+  margin-bottom:8px;
 }
 
-.note-text{
-    color:#ddd;
-    line-height:1.6;
+.inputBox input,
+.inputBox select{
+  width:100%;
+  height:55px;
+  background:#202020;
+  border:1px solid #444;
+  color:white;
+  border-radius:15px;
+  padding:10px;
+  font-size:18px;
 }
 
-.note-date{
-    color:#777;
-    font-size:12px;
-    margin-top:12px;
+.convertResult{
+  margin-top:25px;
+  background:#171717;
+  padding:25px;
+  border-radius:20px;
+  font-size:24px;
+  text-align:center;
 }
 
-.note-buttons{
-    margin-top:12px;
-    display:flex;
-    gap:8px;
+.convertBtn{
+  width:100%;
+  height:55px;
+  border:0;
+  border-radius:18px;
+  background:#ff8500;
+  color:white;
+  font-size:20px;
+  margin-top:10px;
 }
 
-.note-buttons button{
-    border:0;
-    border-radius:7px;
-
-    color:white;
-
-    padding:8px 12px;
-
-    cursor:pointer;
+/* HISTORY */
+.history{
+  display:none;
+  padding:20px;
 }
 
-.edit{
-    background:#126fd0;
+.historyHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
 }
 
-.delete{
-    background:#b00000;
+.historyHeader h2{
+  font-size:28px;
 }
 
-/* ================= MENU ================= */
-
-.menu-box{
-    display:none;
-
-    position:fixed;
-
-    right:15px;
-    top:58px;
-
-    width:190px;
-
-    background:#151515;
-
-    border:1px solid #444;
-
-    border-radius:12px;
-
-    z-index:999;
+.deleteHistory{
+  font-size:25px;
+  cursor:pointer;
 }
 
-.menu-box div{
-    padding:15px;
-
-    border-bottom:1px solid #333;
-
-    cursor:pointer;
+.historyItem{
+  padding:20px 5px;
+  border-bottom:1px solid #222;
+  font-size:20px;
+  text-align:right;
 }
 
-.menu-box div:last-child{
-    border-bottom:0;
+.historyDate{
+  color:#777;
+  font-size:14px;
+  margin-bottom:8px;
 }
 
-/* ================= FOOTER ================= */
-
-.footer{
-    text-align:center;
-    color:#666;
-    padding:25px;
-    font-size:13px;
+.empty{
+  text-align:center;
+  color:#666;
+  margin-top:100px;
+  font-size:20px;
 }
 
+/* MOBILE */
+@media(max-width:450px){
+
+  .tabs{
+    font-size:21px;
+    gap:25px;
+  }
+
+  .display{
+    min-height:250px;
+  }
+
+  .btn{
+    height:70px;
+    font-size:25px;
+  }
+
+  .converterGrid{
+    gap:20px 5px;
+  }
+
+  .icon{
+    font-size:32px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
+<div class="app">
 
-<div class="header">
+<!-- TOP -->
+<div class="topbar">
 
-    <span>ashraf ali emon.com</span>
+  <div class="tabs">
+    <div class="tab active" id="calculatorTab" onclick="showCalculator()">
+      Calculator
+    </div>
 
-    <div class="menu" onclick="toggleMenu()">☰</div>
+    <div class="tab" id="converterTab" onclick="showConverter()">
+      Converter
+    </div>
+  </div>
+
+  <div class="menu" onclick="toggleMenu()">⋮</div>
+
+  <div class="menuBox" id="menuBox">
+    <button onclick="showHistory()">🕘 History</button>
+  </div>
 
 </div>
 
 
-<!-- ================= MENU ================= -->
+<!-- CALCULATOR -->
+<div id="calculator">
 
-<div class="menu-box" id="menuBox">
+  <div class="display">
 
-    <div onclick="showPage('home')">
-        🏠 Home
-    </div>
+    <div class="expression" id="expression"></div>
 
-    <div onclick="showPage('calculator')">
-        🧮 Calculator
-    </div>
+    <div class="result" id="result">0</div>
 
-    <div onclick="showPage('notes')">
-        📝 Notes
-    </div>
+  </div>
 
-</div>
+  <div class="buttons">
 
+    <button class="btn operator" onclick="clearCalc()">C</button>
+    <button class="btn operator" onclick="backspace()">⌫</button>
+    <button class="btn operator" onclick="percentage()">%</button>
+    <button class="btn operator" onclick="addOperator('/')">÷</button>
 
-<!-- ================= HOME ================= -->
+    <button class="btn" onclick="addNumber('7')">7</button>
+    <button class="btn" onclick="addNumber('8')">8</button>
+    <button class="btn" onclick="addNumber('9')">9</button>
+    <button class="btn operator" onclick="addOperator('*')">×</button>
 
-<div id="home" class="page active">
+    <button class="btn" onclick="addNumber('4')">4</button>
+    <button class="btn" onclick="addNumber('5')">5</button>
+    <button class="btn" onclick="addNumber('6')">6</button>
+    <button class="btn operator" onclick="addOperator('-')">−</button>
 
-    <div class="home">
+    <button class="btn" onclick="addNumber('1')">1</button>
+    <button class="btn" onclick="addNumber('2')">2</button>
+    <button class="btn" onclick="addNumber('3')">3</button>
+    <button class="btn operator" onclick="addOperator('+')">+</button>
 
-        <div class="profile">
+    <button class="btn operator" onclick="addNumber('00')">00</button>
+    <button class="btn" onclick="addNumber('0')">0</button>
+    <button class="btn" onclick="addNumber('.')">.</button>
+    <button class="btn equal" onclick="calculate()">=</button>
 
-            <div class="avatar">
-                A
-            </div>
-
-        </div>
-
-
-        <div class="options">
-
-            <!-- Calculator -->
-
-            <div
-                class="option"
-                onclick="showPage('calculator')"
-            >
-
-                <div class="option-icon">
-                    🧮
-                </div>
-
-                <div class="option-content">
-
-                    <div class="option-title">
-                        Calculator
-                    </div>
-
-                    <div class="option-description">
-                        হিসাব করুন এবং হিসাবের History সংরক্ষণ করুন
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </div>
-
-
-            <!-- Notes -->
-
-            <div
-                class="option"
-                onclick="showPage('notes')"
-            >
-
-                <div class="option-icon">
-                    📝
-                </div>
-
-                <div class="option-content">
-
-                    <div class="option-title">
-                        Notes
-                    </div>
-
-                    <div class="option-description">
-                        আপনার গুরুত্বপূর্ণ নোট লিখুন ও সংরক্ষণ করুন
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </div>
-
-
-            <!-- Future Option -->
-
-            <div class="option future">
-
-                <div class="option-icon">
-                    ➕
-                </div>
-
-                <div class="option-content">
-
-                    <div class="option-title">
-                        আরও অপশন
-                    </div>
-
-                    <div class="option-description">
-                        ভবিষ্যতে এখানে নতুন ফিচার যোগ করা যাবে
-                    </div>
-
-                </div>
-
-                <div class="arrow">
-                    ›
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+  </div>
 
 </div>
 
 
-<!-- ================= CALCULATOR PAGE ================= -->
+<!-- CONVERTER LIST -->
+<div class="converter" id="converter">
 
-<div id="calculator" class="page">
+  <div class="converterGrid">
 
-    <div class="app">
-
-        <button class="back" onclick="showPage('home')">
-            ← Home
-        </button>
-
-        <div class="app-title">
-            🧮 Calculator
-        </div>
-
-
-        <div class="calculator">
-
-            <input
-                id="display"
-                class="display"
-                readonly
-            >
-
-
-            <div class="buttons">
-
-                <button class="clear"
-                    onclick="clearDisplay()">
-                    C
-                </button>
-
-                <button onclick="backspace()">
-                    ⌫
-                </button>
-
-                <button onclick="addValue('%')">
-                    %
-                </button>
-
-                <button class="operator"
-                    onclick="addValue('/')">
-                    ÷
-                </button>
-
-
-                <button onclick="addValue('7')">
-                    7
-                </button>
-
-                <button onclick="addValue('8')">
-                    8
-                </button>
-
-                <button onclick="addValue('9')">
-                    9
-                </button>
-
-                <button class="operator"
-                    onclick="addValue('*')">
-                    ×
-                </button>
-
-
-                <button onclick="addValue('4')">
-                    4
-                </button>
-
-                <button onclick="addValue('5')">
-                    5
-                </button>
-
-                <button onclick="addValue('6')">
-                    6
-                </button>
-
-                <button class="operator"
-                    onclick="addValue('-')">
-                    −
-                </button>
-
-
-                <button onclick="addValue('1')">
-                    1
-                </button>
-
-                <button onclick="addValue('2')">
-                    2
-                </button>
-
-                <button onclick="addValue('3')">
-                    3
-                </button>
-
-                <button class="operator"
-                    onclick="addValue('+')">
-                    +
-                </button>
-
-
-                <button onclick="addValue('0')">
-                    0
-                </button>
-
-                <button onclick="addValue('.')">
-                    .
-                </button>
-
-                <button class="equal"
-                    onclick="calculate()">
-                    =
-                </button>
-
-                <button class="clear"
-                    onclick="clearDisplay()">
-                    AC
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="history-box">
-
-            <div class="history-title">
-                📜 হিসাবের History
-            </div>
-
-            <div id="historyList"></div>
-
-        </div>
-
+    <div class="converterItem" onclick="openConverter('Currency')">
+      <div class="icon">💱</div>
+      <span>Currency</span>
     </div>
+
+    <div class="converterItem" onclick="openConverter('Length')">
+      <div class="icon">📏</div>
+      <span>Length</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Mass')">
+      <div class="icon">⚖️</div>
+      <span>Mass</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Area')">
+      <div class="icon">▣</div>
+      <span>Area</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Time')">
+      <div class="icon">◷</div>
+      <span>Time</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Data')">
+      <div class="icon">💾</div>
+      <span>Data</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Discount')">
+      <div class="icon">🏷️</div>
+      <span>Discount</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Volume')">
+      <div class="icon">⬡</div>
+      <span>Volume</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Numeral System')">
+      <div class="icon">🔢</div>
+      <span>Numeral System</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Speed')">
+      <div class="icon">◉</div>
+      <span>Speed</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('Temperature')">
+      <div class="icon">🌡️</div>
+      <span>Temperature</span>
+    </div>
+
+    <div class="converterItem" onclick="openConverter('BMI')">
+      <div class="icon">⚖</div>
+      <span>BMI</span>
+    </div>
+
+  </div>
 
 </div>
 
 
-<!-- ================= NOTES PAGE ================= -->
+<!-- CONVERTER SCREEN -->
+<div class="converterScreen" id="converterScreen">
 
-<div id="notes" class="page">
+  <div class="back" onclick="backToConverters()">←</div>
 
-    <div class="app">
+  <div class="converterTitle" id="converterTitle">
+    Converter
+  </div>
 
-        <button class="back" onclick="showPage('home')">
-            ← Home
-        </button>
+  <div id="converterInputs"></div>
 
-        <div class="app-title">
-            📝 Notes
-        </div>
+  <button class="convertBtn" onclick="doConvert()">
+    Convert
+  </button>
 
-
-        <input
-            id="noteTitle"
-            class="note-input"
-            placeholder="নোটের শিরোনাম"
-        >
-
-
-        <textarea
-            id="noteText"
-            class="note-input"
-            placeholder="এখানে আপনার নোট লিখুন..."
-        ></textarea>
-
-
-        <button
-            class="save"
-            onclick="saveNote()"
-        >
-            💾 নোট Save করুন
-        </button>
-
-
-        <div id="notesList"></div>
-
-    </div>
+  <div class="convertResult" id="convertResult">
+    Result will appear here
+  </div>
 
 </div>
 
 
-<div class="footer">
-    © 2026 ashraf ali emon.com
+<!-- HISTORY -->
+<div class="history" id="history">
+
+  <div class="historyHeader">
+
+    <h2>History</h2>
+
+    <div class="deleteHistory" onclick="clearHistory()">
+      🗑️
+    </div>
+
+  </div>
+
+  <div id="historyList"></div>
+
+</div>
+
 </div>
 
 
 <script>
 
-/* ================= PAGE SYSTEM ================= */
+/* =========================
+   CALCULATOR
+========================= */
 
-function showPage(page){
+let current = "";
+let previous = "";
+let operator = "";
 
-    document
-        .querySelectorAll(".page")
-        .forEach(function(p){
+const result = document.getElementById("result");
+const expression = document.getElementById("expression");
 
-            p.classList.remove("active");
+function addNumber(num){
 
-        });
+  if(num === "." && current.includes(".")) return;
 
-    document
-        .getElementById(page)
-        .classList.add("active");
+  current += num;
 
-    document
-        .getElementById("menuBox")
-        .style.display="none";
-
-    window.scrollTo(0,0);
+  result.innerText = current;
 }
 
+function addOperator(op){
 
-/* ================= MENU ================= */
+  if(current === "" && previous === "") return;
 
-function toggleMenu(){
+  if(current !== ""){
 
-    let menu =
-        document.getElementById("menuBox");
-
-    if(menu.style.display==="block"){
-
-        menu.style.display="none";
-
-    }else{
-
-        menu.style.display="block";
-
+    if(previous !== ""){
+      calculate();
     }
 
+    previous = current;
+    current = "";
+
+  }
+
+  operator = op;
+
+  expression.innerText =
+    previous + " " + displayOperator(op);
 }
 
+function displayOperator(op){
 
-/* ================= CALCULATOR ================= */
+  if(op === "*") return "×";
+  if(op === "/") return "÷";
+  if(op === "-") return "−";
 
-let display =
-    document.getElementById("display");
-
-
-function addValue(value){
-
-    display.value += value;
-
+  return op;
 }
-
-
-function clearDisplay(){
-
-    display.value="";
-
-}
-
-
-function backspace(){
-
-    display.value =
-        display.value.slice(0,-1);
-
-}
-
 
 function calculate(){
 
-    if(display.value===""){
-        return;
+  if(previous === "" || current === "" || operator === "") return;
+
+  let a = parseFloat(previous);
+  let b = parseFloat(current);
+  let answer;
+
+  if(operator === "+") answer = a + b;
+  if(operator === "-") answer = a - b;
+  if(operator === "*") answer = a * b;
+  if(operator === "/"){
+
+    if(b === 0){
+      result.innerText = "Error";
+      return;
     }
+
+    answer = a / b;
+  }
+
+  let exp =
+    previous + " " +
+    displayOperator(operator) + " " +
+    current;
+
+  expression.innerText = exp + " =";
+
+  result.innerText = formatNumber(answer);
+
+  saveHistory(exp + " = " + formatNumber(answer));
+
+  current = String(answer);
+  previous = "";
+  operator = "";
+}
+
+function formatNumber(num){
+
+  if(!isFinite(num)) return "Error";
+
+  return Number(num.toFixed(12)).toLocaleString("en-US",{
+    maximumFractionDigits:12
+  });
+}
+
+function clearCalc(){
+
+  current = "";
+  previous = "";
+  operator = "";
+
+  expression.innerText = "";
+  result.innerText = "0";
+}
+
+function backspace(){
+
+  current = current.slice(0,-1);
+
+  result.innerText = current || "0";
+}
+
+function percentage(){
+
+  if(current !== ""){
+
+    let old = current;
+
+    current = String(parseFloat(current)/100);
+
+    result.innerText = current;
+
+    saveHistory(old + "% = " + current);
+  }
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function getHistory(){
+
+  return JSON.parse(localStorage.getItem("calculatorHistory") || "[]");
+
+}
+
+function saveHistory(text){
+
+  let history = getHistory();
+
+  history.unshift({
+    text:text,
+    date:new Date().toLocaleString()
+  });
+
+  if(history.length > 100){
+    history.pop();
+  }
+
+  localStorage.setItem(
+    "calculatorHistory",
+    JSON.stringify(history)
+  );
+
+}
+
+function showHistory(){
+
+  document.getElementById("menuBox").style.display="none";
+
+  document.getElementById("calculator").style.display="none";
+  document.getElementById("converter").style.display="none";
+  document.getElementById("converterScreen").style.display="none";
+  document.getElementById("history").style.display="block";
+
+  renderHistory();
+
+}
+
+function renderHistory(){
+
+  let list = document.getElementById("historyList");
+
+  let history = getHistory();
+
+  if(history.length === 0){
+
+    list.innerHTML =
+      '<div class="empty">No calculation history</div>';
+
+    return;
+  }
+
+  list.innerHTML = history.map(item => `
+
+    <div class="historyItem">
+
+      <div class="historyDate">
+        ${item.date}
+      </div>
+
+      ${item.text}
+
+    </div>
+
+  `).join("");
+
+}
+
+function clearHistory(){
+
+  if(confirm("Delete all history?")){
+
+    localStorage.removeItem("calculatorHistory");
+
+    renderHistory();
+
+  }
+
+}
+
+
+/* =========================
+   MAIN NAVIGATION
+========================= */
+
+function showCalculator(){
+
+  document.getElementById("calculator").style.display="block";
+
+  document.getElementById("converter").style.display="none";
+
+  document.getElementById("converterScreen").style.display="none";
+
+  document.getElementById("history").style.display="none";
+
+  document.getElementById("calculatorTab").classList.add("active");
+
+  document.getElementById("converterTab").classList.remove("active");
+
+}
+
+function showConverter(){
+
+  document.getElementById("calculator").style.display="none";
+
+  document.getElementById("converter").style.display="block";
+
+  document.getElementById("converterScreen").style.display="none";
+
+  document.getElementById("history").style.display="none";
+
+  document.getElementById("calculatorTab").classList.remove("active");
+
+  document.getElementById("converterTab").classList.add("active");
+
+}
+
+function toggleMenu(){
+
+  let menu = document.getElementById("menuBox");
+
+  menu.style.display =
+    menu.style.display === "block"
+    ? "none"
+    : "block";
+
+}
+
+
+/* =========================
+   CONVERTER
+========================= */
+
+let activeConverter = "";
+
+function openConverter(type){
+
+  activeConverter = type;
+
+  document.getElementById("converter").style.display="none";
+
+  document.getElementById("converterScreen").style.display="block";
+
+  document.getElementById("converterTitle").innerText = type;
+
+  createInputs(type);
+
+}
+
+function backToConverters(){
+
+  document.getElementById("converterScreen").style.display="none";
+
+  document.getElementById("converter").style.display="block";
+
+}
+
+function createInputs(type){
+
+  let box = document.getElementById("converterInputs");
+
+  if(type === "Temperature"){
+
+    box.innerHTML = `
+
+      <div class="inputBox">
+        <label>Value</label>
+        <input id="value1" type="number" placeholder="Enter value">
+      </div>
+
+      <div class="inputBox">
+        <label>From</label>
+        <select id="fromUnit">
+          <option value="C">Celsius</option>
+          <option value="F">Fahrenheit</option>
+          <option value="K">Kelvin</option>
+        </select>
+      </div>
+
+      <div class="inputBox">
+        <label>To</label>
+        <select id="toUnit">
+          <option value="C">Celsius</option>
+          <option value="F">Fahrenheit</option>
+          <option value="K">Kelvin</option>
+        </select>
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  if(type === "BMI"){
+
+    box.innerHTML = `
+
+      <div class="inputBox">
+        <label>Weight (kg)</label>
+        <input id="weight" type="number">
+      </div>
+
+      <div class="inputBox">
+        <label>Height (cm)</label>
+        <input id="height" type="number">
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  let units = {
+
+    "Length":[
+      ["Meter","m"],
+      ["Kilometer","km"],
+      ["Centimeter","cm"],
+      ["Millimeter","mm"],
+      ["Mile","mile"],
+      ["Foot","ft"],
+      ["Inch","inch"]
+    ],
+
+    "Mass":[
+      ["Kilogram","kg"],
+      ["Gram","g"],
+      ["Milligram","mg"],
+      ["Pound","lb"],
+      ["Ounce","oz"]
+    ],
+
+    "Area":[
+      ["Square meter","m2"],
+      ["Square kilometer","km2"],
+      ["Square foot","ft2"],
+      ["Acre","acre"]
+    ],
+
+    "Time":[
+      ["Second","sec"],
+      ["Minute","min"],
+      ["Hour","hour"],
+      ["Day","day"],
+      ["Week","week"]
+    ],
+
+    "Data":[
+      ["Byte","B"],
+      ["Kilobyte","KB"],
+      ["Megabyte","MB"],
+      ["Gigabyte","GB"],
+      ["Terabyte","TB"]
+    ],
+
+    "Volume":[
+      ["Liter","L"],
+      ["Milliliter","mL"],
+      ["Cubic meter","m3"],
+      ["Gallon","gal"]
+    ],
+
+    "Speed":[
+      ["m/s","ms"],
+      ["km/h","kmh"],
+      ["mph","mph"]
+    ]
+
+  };
+
+  if(units[type]){
+
+    let options = units[type].map(
+      u => `<option value="${u[1]}">${u[0]}</option>`
+    ).join("");
+
+    box.innerHTML = `
+
+      <div class="inputBox">
+        <label>Value</label>
+        <input id="value1" type="number" placeholder="Enter value">
+      </div>
+
+      <div class="inputBox">
+        <label>From</label>
+        <select id="fromUnit">
+          ${options}
+        </select>
+      </div>
+
+      <div class="inputBox">
+        <label>To</label>
+        <select id="toUnit">
+          ${options}
+        </select>
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  if(type === "Discount"){
+
+    box.innerHTML = `
+
+      <div class="inputBox">
+        <label>Original Price</label>
+        <input id="price" type="number">
+      </div>
+
+      <div class="inputBox">
+        <label>Discount (%)</label>
+        <input id="discount" type="number">
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  if(type === "Numeral System"){
+
+    box.innerHTML = `
+
+      <div class="inputBox">
+        <label>Number</label>
+        <input id="value1" type="text">
+      </div>
+
+      <div class="inputBox">
+        <label>From Base</label>
+        <select id="fromBase">
+          <option value="2">Binary</option>
+          <option value="8">Octal</option>
+          <option value="10" selected>Decimal</option>
+          <option value="16">Hexadecimal</option>
+        </select>
+      </div>
+
+      <div class="inputBox">
+        <label>To Base</label>
+        <select id="toBase">
+          <option value="2">Binary</option>
+          <option value="8">Octal</option>
+          <option value="10">Decimal</option>
+          <option value="16">Hexadecimal</option>
+        </select>
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  if(type === "Currency"){
+
+    box.innerHTML = `
+
+      <div class="inputBox">
+        <label>Amount</label>
+        <input id="value1" type="number">
+      </div>
+
+      <div class="inputBox">
+        <label>From</label>
+        <select id="fromCurrency">
+          <option value="BDT">Bangladesh Taka</option>
+          <option value="USD">US Dollar</option>
+          <option value="EUR">Euro</option>
+          <option value="GBP">British Pound</option>
+        </select>
+      </div>
+
+      <div class="inputBox">
+        <label>To</label>
+        <select id="toCurrency">
+          <option value="BDT">Bangladesh Taka</option>
+          <option value="USD">US Dollar</option>
+          <option value="EUR">Euro</option>
+          <option value="GBP">British Pound</option>
+        </select>
+      </div>
+
+    `;
+
+    return;
+  }
+
+}
+
+
+/* =========================
+   CONVERSION
+========================= */
+
+function doConvert(){
+
+  let type = activeConverter;
+
+  if(type === "BMI"){
+
+    let weight = parseFloat(
+      document.getElementById("weight").value
+    );
+
+    let height = parseFloat(
+      document.getElementById("height").value
+    );
+
+    if(!weight || !height) return;
+
+    let h = height / 100;
+
+    let bmi = weight / (h*h);
+
+    let status =
+      bmi < 18.5 ? "Underweight" :
+      bmi < 25 ? "Normal" :
+      bmi < 30 ? "Overweight" :
+      "Obese";
+
+    document.getElementById("convertResult").innerText =
+      "BMI: " + bmi.toFixed(2) + " — " + status;
+
+    return;
+  }
+
+
+  if(type === "Discount"){
+
+    let price =
+      parseFloat(document.getElementById("price").value);
+
+    let discount =
+      parseFloat(document.getElementById("discount").value);
+
+    if(isNaN(price) || isNaN(discount)) return;
+
+    let saving = price * discount / 100;
+
+    let finalPrice = price - saving;
+
+    document.getElementById("convertResult").innerText =
+      "You save: " + saving.toFixed(2) +
+      " | Final price: " + finalPrice.toFixed(2);
+
+    return;
+  }
+
+
+  if(type === "Numeral System"){
+
+    let value =
+      document.getElementById("value1").value.trim();
+
+    let from =
+      parseInt(document.getElementById("fromBase").value);
+
+    let to =
+      parseInt(document.getElementById("toBase").value);
 
     try{
 
-        let expression =
-            display.value;
+      let decimal = parseInt(value,from);
 
-        let result =
-            Function(
-                '"use strict";return ('+
-                expression+
-                ')'
-            )();
+      if(isNaN(decimal)) throw "error";
 
-        if(!isFinite(result)){
-            throw new Error();
-        }
+      let answer = decimal.toString(to).toUpperCase();
 
-        result =
-            Number(result.toFixed(10));
-
-        saveHistory(
-            expression,
-            result
-        );
-
-        display.value=result;
-
-        loadHistory();
+      document.getElementById("convertResult").innerText =
+        answer;
 
     }catch(e){
 
-        display.value="Error";
-
-        setTimeout(function(){
-
-            display.value="";
-
-        },1000);
+      document.getElementById("convertResult").innerText =
+        "Invalid number";
 
     }
 
-}
+    return;
+  }
 
 
-/* ================= HISTORY ================= */
+  if(type === "Temperature"){
 
-function saveHistory(
-    expression,
-    result
-){
+    let value =
+      parseFloat(document.getElementById("value1").value);
 
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "calculatorHistory"
-            )
-        ) || [];
+    let from =
+      document.getElementById("fromUnit").value;
 
+    let to =
+      document.getElementById("toUnit").value;
 
-    history.unshift({
+    if(isNaN(value)) return;
 
-        expression:expression,
+    let c;
 
-        result:result,
+    if(from === "C") c=value;
+    if(from === "F") c=(value-32)*5/9;
+    if(from === "K") c=value-273.15;
 
-        date:
-            new Date()
-            .toLocaleString("bn-BD")
+    let answer;
 
-    });
+    if(to === "C") answer=c;
+    if(to === "F") answer=c*9/5+32;
+    if(to === "K") answer=c+273.15;
 
+    document.getElementById("convertResult").innerText =
+      answer.toFixed(4);
 
-    localStorage.setItem(
-
-        "calculatorHistory",
-
-        JSON.stringify(history)
-
-    );
-
-}
+    return;
+  }
 
 
-function loadHistory(){
+  if(type === "Currency"){
 
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "calculatorHistory"
-            )
-        ) || [];
+    let amount =
+      parseFloat(document.getElementById("value1").value);
 
+    let from =
+      document.getElementById("fromCurrency").value;
 
-    let list =
-        document.getElementById(
-            "historyList"
-        );
+    let to =
+      document.getElementById("toCurrency").value;
 
+    /*
+      Example rates.
+      এগুলো পরে live currency API দিয়ে
+      পরিবর্তন করা যাবে।
+    */
 
-    list.innerHTML="";
+    let rates = {
+      BDT:1,
+      USD:120,
+      EUR:140,
+      GBP:165
+    };
 
+    if(isNaN(amount)) return;
 
-    if(history.length===0){
+    let bdt = amount * rates[from];
 
-        list.innerHTML =
-            "<p style='color:#777'>এখনও কোনো হিসাব নেই।</p>";
+    let answer = bdt / rates[to];
 
-        return;
+    document.getElementById("convertResult").innerText =
+      answer.toFixed(4) + " " + to;
 
-    }
-
-
-    history.forEach(
-        function(item,index){
-
-            let div =
-                document.createElement(
-                    "div"
-                );
-
-            div.className =
-                "history-item";
+    return;
+  }
 
 
-            div.innerHTML =
+  let value =
+    parseFloat(document.getElementById("value1").value);
 
-                "<b>"+
-                item.expression+
-                " = "+
-                item.result+
-                "</b>"+
+  let from =
+    document.getElementById("fromUnit").value;
 
-                "<br>"+
+  let to =
+    document.getElementById("toUnit").value;
 
-                "<small style='color:#777'>"+
-                item.date+
-                "</small>"+
+  if(isNaN(value)) return;
 
-                "<button "+
-                "class='history-delete' "+
-                "onclick='deleteHistory("+
-                index+
-                ")'>"+
-                "×"+
-                "</button>";
+  let answer = convertUnits(type,value,from,to);
 
-
-            list.appendChild(div);
-
-        }
-    );
+  document.getElementById("convertResult").innerText =
+    answer.toFixed(6);
 
 }
 
 
-function deleteHistory(index){
+function convertUnits(type,value,from,to){
 
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "calculatorHistory"
-            )
-        ) || [];
+  if(type === "Length"){
 
+    let r = {
+      m:1,
+      km:1000,
+      cm:.01,
+      mm:.001,
+      mile:1609.344,
+      ft:.3048,
+      inch:.0254
+    };
 
-    history.splice(index,1);
-
-
-    localStorage.setItem(
-
-        "calculatorHistory",
-
-        JSON.stringify(history)
-
-    );
+    return value*r[from]/r[to];
+  }
 
 
-    loadHistory();
+  if(type === "Mass"){
 
-}
+    let r = {
+      kg:1,
+      g:.001,
+      mg:.000001,
+      lb:.45359237,
+      oz:.0283495
+    };
 
-
-/* ================= NOTES ================= */
-
-let editingNote = -1;
-
-
-function saveNote(){
-
-    let title =
-        document
-        .getElementById("noteTitle")
-        .value
-        .trim();
+    return value*r[from]/r[to];
+  }
 
 
-    let text =
-        document
-        .getElementById("noteText")
-        .value
-        .trim();
+  if(type === "Area"){
+
+    let r = {
+      m2:1,
+      km2:1000000,
+      ft2:.092903,
+      acre:4046.856
+    };
+
+    return value*r[from]/r[to];
+  }
 
 
-    if(title==="" && text===""){
+  if(type === "Time"){
 
-        alert(
-            "দয়া করে একটি নোট লিখুন।"
-        );
+    let r = {
+      sec:1,
+      min:60,
+      hour:3600,
+      day:86400,
+      week:604800
+    };
 
-        return;
-
-    }
-
-
-    let notes =
-        JSON.parse(
-            localStorage.getItem("notes")
-        ) || [];
+    return value*r[from]/r[to];
+  }
 
 
-    if(editingNote===-1){
+  if(type === "Data"){
 
-        notes.unshift({
+    let r = {
+      B:1,
+      KB:1024,
+      MB:1024**2,
+      GB:1024**3,
+      TB:1024**4
+    };
 
-            title:
-                title || "নতুন নোট",
-
-            text:text,
-
-            date:
-                new Date()
-                .toLocaleString("bn-BD")
-
-        });
-
-    }else{
-
-        notes[editingNote].title =
-            title || "নতুন নোট";
-
-        notes[editingNote].text =
-            text;
-
-        notes[editingNote].date =
-            new Date()
-            .toLocaleString("bn-BD");
-
-        editingNote=-1;
-
-    }
+    return value*r[from]/r[to];
+  }
 
 
-    localStorage.setItem(
+  if(type === "Volume"){
 
-        "notes",
+    let r = {
+      L:1,
+      mL:.001,
+      m3:1000,
+      gal:3.78541
+    };
 
-        JSON.stringify(notes)
-
-    );
-
-
-    document.getElementById(
-        "noteTitle"
-    ).value="";
-
-
-    document.getElementById(
-        "noteText"
-    ).value="";
+    return value*r[from]/r[to];
+  }
 
 
-    loadNotes();
+  if(type === "Speed"){
+
+    let r = {
+      ms:1,
+      kmh:1/3.6,
+      mph:.44704
+    };
+
+    return value*r[from]/r[to];
+  }
+
+  return value;
 
 }
 
 
-/* ================= LOAD NOTES ================= */
+/* KEYBOARD SUPPORT */
 
-function loadNotes(){
+document.addEventListener("keydown",function(e){
 
-    let notes =
-        JSON.parse(
-            localStorage.getItem("notes")
-        ) || [];
+  if(/[0-9.]/.test(e.key)){
+    addNumber(e.key);
+  }
 
+  if(["+","-","*","/"].includes(e.key)){
+    addOperator(e.key);
+  }
 
-    let list =
-        document.getElementById(
-            "notesList"
-        );
+  if(e.key === "Enter"){
+    calculate();
+  }
 
+  if(e.key === "Backspace"){
+    backspace();
+  }
 
-    list.innerHTML="";
+  if(e.key === "Escape"){
+    clearCalc();
+  }
 
-
-    if(notes.length===0){
-
-        list.innerHTML =
-            "<p style='color:#777'>এখনও কোনো নোট নেই।</p>";
-
-        return;
-
-    }
-
-
-    notes.forEach(
-        function(note,index){
-
-            let div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className="note";
-
-
-            div.innerHTML =
-
-                "<div class='note-title'>"+
-                "📝 "+
-                escapeHTML(note.title)+
-                "</div>"+
-
-                "<div class='note-text'>"+
-                escapeHTML(note.text)
-                .replace(/\n/g,"<br>")+
-                "</div>"+
-
-                "<div class='note-date'>"+
-                note.date+
-                "</div>"+
-
-                "<div class='note-buttons'>"+
-
-                "<button class='edit' "+
-                "onclick='editNote("+
-                index+
-                ")'>"+
-                "✏️ Edit"+
-                "</button>"+
-
-                "<button class='delete' "+
-                "onclick='deleteNote("+
-                index+
-                ")'>"+
-                "🗑️ Delete"+
-                "</button>"+
-
-                "</div>";
-
-
-            list.appendChild(div);
-
-        }
-    );
-
-}
-
-
-/* ================= EDIT NOTE ================= */
-
-function editNote(index){
-
-    let notes =
-        JSON.parse(
-            localStorage.getItem("notes")
-        ) || [];
-
-
-    document.getElementById(
-        "noteTitle"
-    ).value =
-        notes[index].title;
-
-
-    document.getElementById(
-        "noteText"
-    ).value =
-        notes[index].text;
-
-
-    editingNote=index;
-
-    window.scrollTo(0,0);
-
-}
-
-
-/* ================= DELETE NOTE ================= */
-
-function deleteNote(index){
-
-    if(
-        !confirm(
-            "এই নোটটি মুছে ফেলতে চান?"
-        )
-    ){
-
-        return;
-
-    }
-
-
-    let notes =
-        JSON.parse(
-            localStorage.getItem("notes")
-        ) || [];
-
-
-    notes.splice(index,1);
-
-
-    localStorage.setItem(
-
-        "notes",
-
-        JSON.stringify(notes)
-
-    );
-
-
-    loadNotes();
-
-}
-
-
-/* ================= SECURITY ================= */
-
-function escapeHTML(text){
-
-    let div =
-        document.createElement("div");
-
-    div.textContent=text;
-
-    return div.innerHTML;
-
-}
-
-
-/* ================= KEYBOARD ================= */
-
-document.addEventListener(
-    "keydown",
-    function(e){
-
-        if(
-            /[0-9+\-*/.%]/.test(e.key)
-        ){
-
-            addValue(e.key);
-
-        }
-
-
-        if(e.key==="Enter"){
-
-            calculate();
-
-        }
-
-
-        if(e.key==="Backspace"){
-
-            backspace();
-
-        }
-
-
-        if(e.key==="Escape"){
-
-            clearDisplay();
-
-        }
-
-    }
-);
-
-
-/* ================= START ================= */
-
-loadHistory();
-
-loadNotes();
+});
 
 </script>
 
