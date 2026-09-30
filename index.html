@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ashraf ali emon.com</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -14,124 +16,214 @@ body{
     margin:0;
     background:#000;
     color:white;
-    font-family:Arial,sans-serif;
+    font-family:Arial,"Noto Sans Bengali",sans-serif;
 }
 
-/* Header */
+/* ================= HEADER ================= */
+
 .header{
-    text-align:center;
-    padding:15px 10px;
+    height:65px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    border-bottom:1px solid #222;
     font-size:20px;
     font-weight:bold;
-    border-bottom:1px solid #222;
 }
 
-/* Menu */
 .menu{
     position:absolute;
-    top:15px;
-    right:20px;
+    right:18px;
     font-size:32px;
     cursor:pointer;
 }
 
-.menu-box{
-    display:none;
-    position:absolute;
-    right:10px;
-    top:55px;
-    background:#151515;
-    border:1px solid #444;
-    border-radius:10px;
-    width:180px;
-    z-index:100;
-}
+/* ================= HOME ================= */
 
-.menu-box div{
-    padding:15px;
-    border-bottom:1px solid #333;
-    cursor:pointer;
-}
-
-.menu-box div:hover{
-    background:#292929;
-}
-
-/* Profile */
-.profile{
-    text-align:center;
-    padding:25px 0 10px;
-}
-
-.avatar{
-    width:140px;
-    height:140px;
-    background:red;
-    border-radius:50%;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:58px;
-    font-weight:bold;
-}
-
-/* Main */
-.container{
-    width:95%;
-    max-width:500px;
-    margin:20px auto;
-}
-
-/* Tabs */
-.tabs{
-    display:flex;
-    gap:10px;
-    margin-bottom:15px;
-}
-
-.tab{
-    flex:1;
-    padding:13px;
-    background:#191919;
-    border:1px solid #444;
-    color:white;
-    border-radius:8px;
-    font-size:17px;
-    cursor:pointer;
-}
-
-.tab.active{
-    background:#333;
-}
-
-/* Sections */
-.section{
+.page{
     display:none;
 }
 
-.section.active{
+.page.active{
     display:block;
 }
 
-/* Calculator */
+.home{
+    width:94%;
+    max-width:600px;
+    margin:auto;
+    padding:25px 0 40px;
+}
+
+.profile{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.avatar{
+    width:105px;
+    height:105px;
+    border-radius:50%;
+    background:#ff0808;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:auto;
+    font-size:45px;
+    font-weight:bold;
+}
+
+/* ================= OPTION CARDS ================= */
+
+.options{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.option{
+    min-height:105px;
+    background:linear-gradient(
+        135deg,
+        #151515,
+        #080808
+    );
+
+    border:1px solid #292929;
+    border-radius:22px;
+
+    display:flex;
+    align-items:center;
+
+    padding:18px 20px;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s,
+        border-color .2s,
+        background .2s;
+}
+
+.option:active{
+    transform:scale(.98);
+}
+
+.option:hover{
+    border-color:#555;
+    background:#171717;
+}
+
+.option-icon{
+    width:65px;
+    height:65px;
+
+    border-radius:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#202020;
+
+    font-size:32px;
+
+    margin-right:17px;
+}
+
+.option-content{
+    flex:1;
+    text-align:left;
+}
+
+.option-title{
+    font-size:23px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.option-description{
+    color:#999;
+    font-size:14px;
+}
+
+.arrow{
+    font-size:32px;
+    color:#aaa;
+}
+
+/* ================= FUTURE OPTION ================= */
+
+.future{
+    border-style:dashed;
+    opacity:.85;
+}
+
+.future .option-icon{
+    color:#aaa;
+}
+
+/* ================= APP PAGES ================= */
+
+.app{
+    width:94%;
+    max-width:550px;
+    margin:auto;
+    padding:20px 0 50px;
+}
+
+.back{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    background:#171717;
+    border:1px solid #333;
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    margin-bottom:20px;
+
+    font-size:16px;
+}
+
+.app-title{
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+/* ================= CALCULATOR ================= */
+
 .calculator{
     background:#111;
-    padding:15px;
-    border-radius:15px;
     border:1px solid #333;
+    border-radius:18px;
+    padding:15px;
 }
 
 .display{
     width:100%;
-    height:70px;
+    height:75px;
+
     background:#000;
     color:white;
+
     border:1px solid #444;
-    border-radius:10px;
-    font-size:30px;
-    text-align:right;
+    border-radius:12px;
+
     padding:10px;
+
+    text-align:right;
+
+    font-size:30px;
+
     margin-bottom:12px;
 }
 
@@ -142,224 +234,524 @@ body{
 }
 
 .buttons button{
-    height:60px;
-    border:none;
-    border-radius:10px;
+    height:62px;
+
+    border:0;
+    border-radius:12px;
+
     background:#292929;
     color:white;
-    font-size:22px;
+
+    font-size:21px;
+
     cursor:pointer;
 }
 
 .buttons button:active{
-    background:#555;
+    transform:scale(.96);
 }
 
 .operator{
-    background:#ff3b30 !important;
+    background:#b40000 !important;
 }
 
 .equal{
-    background:#1683ff !important;
+    background:#126fd0 !important;
 }
 
 .clear{
     background:#555 !important;
 }
 
-/* History */
-.history{
+/* ================= HISTORY ================= */
+
+.history-box{
     margin-top:20px;
+
     background:#111;
+
+    border:1px solid #333;
+
+    border-radius:15px;
+
     padding:15px;
-    border-radius:12px;
 }
 
-.history h3{
-    margin-top:0;
+.history-title{
+    font-size:20px;
+    margin-bottom:12px;
 }
 
 .history-item{
-    padding:10px;
+    padding:12px 5px;
+
     border-bottom:1px solid #333;
+
     text-align:left;
 }
 
-.delete-history{
-    float:right;
-    background:#d00;
-    color:white;
-    border:0;
-    padding:5px 8px;
-    border-radius:5px;
+.history-item:last-child{
+    border-bottom:0;
 }
 
-/* Notes */
+.history-delete{
+    float:right;
+
+    background:#b00000;
+
+    border:0;
+
+    color:white;
+
+    padding:5px 9px;
+
+    border-radius:6px;
+}
+
+/* ================= NOTES ================= */
+
 .note-input{
     width:100%;
+
     background:#111;
+
     color:white;
+
     border:1px solid #444;
-    border-radius:10px;
-    padding:12px;
-    margin-bottom:10px;
+
+    border-radius:12px;
+
+    padding:14px;
+
     font-size:16px;
+
+    margin-bottom:12px;
 }
 
 textarea{
-    min-height:150px;
+    min-height:180px;
     resize:vertical;
 }
 
-.save-btn{
+.save{
     width:100%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#1683ff;
+
+    background:#126fd0;
+
     color:white;
+
+    border:0;
+
+    border-radius:12px;
+
+    padding:15px;
+
     font-size:18px;
+
     cursor:pointer;
 }
 
-.notes-list{
-    margin-top:20px;
-}
-
 .note{
-    background:#151515;
+    background:#111;
+
     border:1px solid #333;
-    border-radius:10px;
+
+    border-radius:15px;
+
     padding:15px;
-    margin-bottom:12px;
+
+    margin-top:15px;
+
     text-align:left;
 }
 
-.note h3{
-    margin-top:0;
+.note-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:10px;
 }
 
-.note-buttons{
-    display:flex;
-    gap:8px;
+.note-text{
+    color:#ddd;
+    line-height:1.6;
+}
+
+.note-date{
+    color:#777;
+    font-size:12px;
     margin-top:12px;
 }
 
+.note-buttons{
+    margin-top:12px;
+    display:flex;
+    gap:8px;
+}
+
 .note-buttons button{
-    padding:8px 12px;
-    border:none;
-    border-radius:6px;
+    border:0;
+    border-radius:7px;
+
     color:white;
+
+    padding:8px 12px;
+
     cursor:pointer;
 }
 
 .edit{
-    background:#1683ff;
+    background:#126fd0;
 }
 
 .delete{
-    background:#d00000;
+    background:#b00000;
 }
 
-/* Footer */
+/* ================= MENU ================= */
+
+.menu-box{
+    display:none;
+
+    position:fixed;
+
+    right:15px;
+    top:58px;
+
+    width:190px;
+
+    background:#151515;
+
+    border:1px solid #444;
+
+    border-radius:12px;
+
+    z-index:999;
+}
+
+.menu-box div{
+    padding:15px;
+
+    border-bottom:1px solid #333;
+
+    cursor:pointer;
+}
+
+.menu-box div:last-child{
+    border-bottom:0;
+}
+
+/* ================= FOOTER ================= */
+
 .footer{
     text-align:center;
-    color:#777;
-    padding:30px 10px;
+    color:#666;
+    padding:25px;
+    font-size:13px;
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <div class="header">
-    ashraf ali emon.com
+
+    <span>ashraf ali emon.com</span>
+
+    <div class="menu" onclick="toggleMenu()">☰</div>
+
 </div>
 
-<div class="menu" onclick="toggleMenu()">☰</div>
+
+<!-- ================= MENU ================= -->
 
 <div class="menu-box" id="menuBox">
-    <div onclick="showSection('calculator')">🧮 Calculator</div>
-    <div onclick="showSection('notes')">📝 Notes</div>
-    <div onclick="showSection('history')">📜 History</div>
-</div>
 
-<div class="profile">
-    <div class="avatar">A</div>
-</div>
-
-<div class="container">
-
-    <div class="tabs">
-        <button class="tab active" onclick="showSection('calculator')">
-            🧮 Calculator
-        </button>
-
-        <button class="tab" onclick="showSection('notes')">
-            📝 Notes
-        </button>
+    <div onclick="showPage('home')">
+        🏠 Home
     </div>
 
-    <!-- Calculator -->
-    <div id="calculator" class="section active">
+    <div onclick="showPage('calculator')">
+        🧮 Calculator
+    </div>
+
+    <div onclick="showPage('notes')">
+        📝 Notes
+    </div>
+
+</div>
+
+
+<!-- ================= HOME ================= -->
+
+<div id="home" class="page active">
+
+    <div class="home">
+
+        <div class="profile">
+
+            <div class="avatar">
+                A
+            </div>
+
+        </div>
+
+
+        <div class="options">
+
+            <!-- Calculator -->
+
+            <div
+                class="option"
+                onclick="showPage('calculator')"
+            >
+
+                <div class="option-icon">
+                    🧮
+                </div>
+
+                <div class="option-content">
+
+                    <div class="option-title">
+                        Calculator
+                    </div>
+
+                    <div class="option-description">
+                        হিসাব করুন এবং হিসাবের History সংরক্ষণ করুন
+                    </div>
+
+                </div>
+
+                <div class="arrow">
+                    ›
+                </div>
+
+            </div>
+
+
+            <!-- Notes -->
+
+            <div
+                class="option"
+                onclick="showPage('notes')"
+            >
+
+                <div class="option-icon">
+                    📝
+                </div>
+
+                <div class="option-content">
+
+                    <div class="option-title">
+                        Notes
+                    </div>
+
+                    <div class="option-description">
+                        আপনার গুরুত্বপূর্ণ নোট লিখুন ও সংরক্ষণ করুন
+                    </div>
+
+                </div>
+
+                <div class="arrow">
+                    ›
+                </div>
+
+            </div>
+
+
+            <!-- Future Option -->
+
+            <div class="option future">
+
+                <div class="option-icon">
+                    ➕
+                </div>
+
+                <div class="option-content">
+
+                    <div class="option-title">
+                        আরও অপশন
+                    </div>
+
+                    <div class="option-description">
+                        ভবিষ্যতে এখানে নতুন ফিচার যোগ করা যাবে
+                    </div>
+
+                </div>
+
+                <div class="arrow">
+                    ›
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= CALCULATOR PAGE ================= -->
+
+<div id="calculator" class="page">
+
+    <div class="app">
+
+        <button class="back" onclick="showPage('home')">
+            ← Home
+        </button>
+
+        <div class="app-title">
+            🧮 Calculator
+        </div>
+
 
         <div class="calculator">
 
             <input
-                type="text"
                 id="display"
                 class="display"
-                value=""
                 readonly
             >
 
+
             <div class="buttons">
 
-                <button class="clear" onclick="clearDisplay()">C</button>
-                <button onclick="backspace()">⌫</button>
-                <button onclick="addValue('%')">%</button>
-                <button class="operator" onclick="addValue('/')">÷</button>
+                <button class="clear"
+                    onclick="clearDisplay()">
+                    C
+                </button>
 
-                <button onclick="addValue('7')">7</button>
-                <button onclick="addValue('8')">8</button>
-                <button onclick="addValue('9')">9</button>
-                <button class="operator" onclick="addValue('*')">×</button>
+                <button onclick="backspace()">
+                    ⌫
+                </button>
 
-                <button onclick="addValue('4')">4</button>
-                <button onclick="addValue('5')">5</button>
-                <button onclick="addValue('6')">6</button>
-                <button class="operator" onclick="addValue('-')">−</button>
+                <button onclick="addValue('%')">
+                    %
+                </button>
 
-                <button onclick="addValue('1')">1</button>
-                <button onclick="addValue('2')">2</button>
-                <button onclick="addValue('3')">3</button>
-                <button class="operator" onclick="addValue('+')">+</button>
+                <button class="operator"
+                    onclick="addValue('/')">
+                    ÷
+                </button>
 
-                <button onclick="addValue('0')">0</button>
-                <button onclick="addValue('.')">.</button>
-                <button class="equal" onclick="calculate()">=</button>
-                <button class="clear" onclick="clearDisplay()">AC</button>
+
+                <button onclick="addValue('7')">
+                    7
+                </button>
+
+                <button onclick="addValue('8')">
+                    8
+                </button>
+
+                <button onclick="addValue('9')">
+                    9
+                </button>
+
+                <button class="operator"
+                    onclick="addValue('*')">
+                    ×
+                </button>
+
+
+                <button onclick="addValue('4')">
+                    4
+                </button>
+
+                <button onclick="addValue('5')">
+                    5
+                </button>
+
+                <button onclick="addValue('6')">
+                    6
+                </button>
+
+                <button class="operator"
+                    onclick="addValue('-')">
+                    −
+                </button>
+
+
+                <button onclick="addValue('1')">
+                    1
+                </button>
+
+                <button onclick="addValue('2')">
+                    2
+                </button>
+
+                <button onclick="addValue('3')">
+                    3
+                </button>
+
+                <button class="operator"
+                    onclick="addValue('+')">
+                    +
+                </button>
+
+
+                <button onclick="addValue('0')">
+                    0
+                </button>
+
+                <button onclick="addValue('.')">
+                    .
+                </button>
+
+                <button class="equal"
+                    onclick="calculate()">
+                    =
+                </button>
+
+                <button class="clear"
+                    onclick="clearDisplay()">
+                    AC
+                </button>
 
             </div>
+
         </div>
 
-        <div class="history">
-            <h3>📜 হিসাবের History</h3>
+
+        <div class="history-box">
+
+            <div class="history-title">
+                📜 হিসাবের History
+            </div>
+
             <div id="historyList"></div>
+
         </div>
 
     </div>
 
+</div>
 
-    <!-- Notes -->
-    <div id="notes" class="section">
+
+<!-- ================= NOTES PAGE ================= -->
+
+<div id="notes" class="page">
+
+    <div class="app">
+
+        <button class="back" onclick="showPage('home')">
+            ← Home
+        </button>
+
+        <div class="app-title">
+            📝 Notes
+        </div>
+
 
         <input
-            type="text"
             id="noteTitle"
             class="note-input"
             placeholder="নোটের শিরোনাম"
         >
+
 
         <textarea
             id="noteText"
@@ -367,15 +759,21 @@ textarea{
             placeholder="এখানে আপনার নোট লিখুন..."
         ></textarea>
 
-        <button class="save-btn" onclick="saveNote()">
+
+        <button
+            class="save"
+            onclick="saveNote()"
+        >
             💾 নোট Save করুন
         </button>
 
-        <div class="notes-list" id="notesList"></div>
+
+        <div id="notesList"></div>
 
     </div>
 
 </div>
+
 
 <div class="footer">
     © 2026 ashraf ali emon.com
@@ -384,210 +782,316 @@ textarea{
 
 <script>
 
-/* =========================
-   MENU
-========================= */
+/* ================= PAGE SYSTEM ================= */
+
+function showPage(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(p){
+
+            p.classList.remove("active");
+
+        });
+
+    document
+        .getElementById(page)
+        .classList.add("active");
+
+    document
+        .getElementById("menuBox")
+        .style.display="none";
+
+    window.scrollTo(0,0);
+}
+
+
+/* ================= MENU ================= */
 
 function toggleMenu(){
-    const menu = document.getElementById("menuBox");
 
-    if(menu.style.display === "block"){
-        menu.style.display = "none";
+    let menu =
+        document.getElementById("menuBox");
+
+    if(menu.style.display==="block"){
+
+        menu.style.display="none";
+
     }else{
-        menu.style.display = "block";
+
+        menu.style.display="block";
+
     }
+
 }
 
 
-/* =========================
-   SECTION
-========================= */
+/* ================= CALCULATOR ================= */
 
-function showSection(section){
+let display =
+    document.getElementById("display");
 
-    document.querySelectorAll(".section").forEach(function(el){
-        el.classList.remove("active");
-    });
-
-    document.getElementById(section).classList.add("active");
-
-    document.getElementById("menuBox").style.display="none";
-
-    document.querySelectorAll(".tab").forEach(function(el){
-        el.classList.remove("active");
-    });
-
-    if(section === "calculator"){
-        document.querySelectorAll(".tab")[0].classList.add("active");
-    }
-
-    if(section === "notes"){
-        document.querySelectorAll(".tab")[1].classList.add("active");
-    }
-}
-
-
-/* =========================
-   CALCULATOR
-========================= */
-
-let display = document.getElementById("display");
 
 function addValue(value){
+
     display.value += value;
+
 }
+
 
 function clearDisplay(){
-    display.value = "";
+
+    display.value="";
+
 }
 
+
 function backspace(){
-    display.value = display.value.slice(0,-1);
+
+    display.value =
+        display.value.slice(0,-1);
+
 }
+
 
 function calculate(){
 
-    if(display.value === ""){
+    if(display.value===""){
         return;
     }
 
     try{
 
-        let expression = display.value;
+        let expression =
+            display.value;
 
-        let result = Function(
-            '"use strict";return (' + expression + ')'
-        )();
+        let result =
+            Function(
+                '"use strict";return ('+
+                expression+
+                ')'
+            )();
 
         if(!isFinite(result)){
             throw new Error();
         }
 
-        result = Number(result.toFixed(10));
+        result =
+            Number(result.toFixed(10));
 
-        saveHistory(expression, result);
+        saveHistory(
+            expression,
+            result
+        );
 
-        display.value = result;
+        display.value=result;
 
         loadHistory();
 
-    }catch(error){
+    }catch(e){
 
-        display.value = "Error";
+        display.value="Error";
 
         setTimeout(function(){
-            display.value = "";
+
+            display.value="";
+
         },1000);
+
     }
+
 }
 
 
-/* =========================
-   CALCULATOR HISTORY
-========================= */
+/* ================= HISTORY ================= */
 
-function saveHistory(expression,result){
+function saveHistory(
+    expression,
+    result
+){
 
     let history =
-        JSON.parse(localStorage.getItem("calculatorHistory")) || [];
+        JSON.parse(
+            localStorage.getItem(
+                "calculatorHistory"
+            )
+        ) || [];
+
 
     history.unshift({
+
         expression:expression,
+
         result:result,
-        date:new Date().toLocaleString("bn-BD")
+
+        date:
+            new Date()
+            .toLocaleString("bn-BD")
+
     });
 
+
     localStorage.setItem(
+
         "calculatorHistory",
+
         JSON.stringify(history)
+
     );
+
 }
 
 
 function loadHistory(){
 
     let history =
-        JSON.parse(localStorage.getItem("calculatorHistory")) || [];
+        JSON.parse(
+            localStorage.getItem(
+                "calculatorHistory"
+            )
+        ) || [];
 
-    let list = document.getElementById("historyList");
+
+    let list =
+        document.getElementById(
+            "historyList"
+        );
+
 
     list.innerHTML="";
 
-    if(history.length === 0){
+
+    if(history.length===0){
 
         list.innerHTML =
             "<p style='color:#777'>এখনও কোনো হিসাব নেই।</p>";
 
         return;
+
     }
 
-    history.forEach(function(item,index){
 
-        let div = document.createElement("div");
+    history.forEach(
+        function(item,index){
 
-        div.className="history-item";
+            let div =
+                document.createElement(
+                    "div"
+                );
 
-        div.innerHTML = `
-            <b>${item.expression} = ${item.result}</b>
-            <br>
-            <small>${item.date}</small>
-            <button
-                class="delete-history"
-                onclick="deleteHistory(${index})">
-                ×
-            </button>
-        `;
+            div.className =
+                "history-item";
 
-        list.appendChild(div);
 
-    });
+            div.innerHTML =
+
+                "<b>"+
+                item.expression+
+                " = "+
+                item.result+
+                "</b>"+
+
+                "<br>"+
+
+                "<small style='color:#777'>"+
+                item.date+
+                "</small>"+
+
+                "<button "+
+                "class='history-delete' "+
+                "onclick='deleteHistory("+
+                index+
+                ")'>"+
+                "×"+
+                "</button>";
+
+
+            list.appendChild(div);
+
+        }
+    );
+
 }
 
 
 function deleteHistory(index){
 
     let history =
-        JSON.parse(localStorage.getItem("calculatorHistory")) || [];
+        JSON.parse(
+            localStorage.getItem(
+                "calculatorHistory"
+            )
+        ) || [];
+
 
     history.splice(index,1);
 
+
     localStorage.setItem(
+
         "calculatorHistory",
+
         JSON.stringify(history)
+
     );
 
+
     loadHistory();
+
 }
 
 
-/* =========================
-   NOTES
-========================= */
+/* ================= NOTES ================= */
 
 let editingNote = -1;
+
 
 function saveNote(){
 
     let title =
-        document.getElementById("noteTitle").value.trim();
+        document
+        .getElementById("noteTitle")
+        .value
+        .trim();
+
 
     let text =
-        document.getElementById("noteText").value.trim();
+        document
+        .getElementById("noteText")
+        .value
+        .trim();
 
-    if(title === "" && text === ""){
-        alert("দয়া করে একটি নোট লিখুন।");
+
+    if(title==="" && text===""){
+
+        alert(
+            "দয়া করে একটি নোট লিখুন।"
+        );
+
         return;
+
     }
 
-    let notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
 
-    if(editingNote === -1){
+    let notes =
+        JSON.parse(
+            localStorage.getItem("notes")
+        ) || [];
+
+
+    if(editingNote===-1){
 
         notes.unshift({
-            title:title || "নতুন নোট",
+
+            title:
+                title || "নতুন নোট",
+
             text:text,
-            date:new Date().toLocaleString("bn-BD")
+
+            date:
+                new Date()
+                .toLocaleString("bn-BD")
+
         });
 
     }else{
@@ -595,181 +1099,253 @@ function saveNote(){
         notes[editingNote].title =
             title || "নতুন নোট";
 
-        notes[editingNote].text = text;
+        notes[editingNote].text =
+            text;
 
         notes[editingNote].date =
-            new Date().toLocaleString("bn-BD");
+            new Date()
+            .toLocaleString("bn-BD");
 
-        editingNote = -1;
+        editingNote=-1;
+
     }
 
+
     localStorage.setItem(
+
         "notes",
+
         JSON.stringify(notes)
+
     );
 
-    document.getElementById("noteTitle").value="";
-    document.getElementById("noteText").value="";
 
-    document.querySelector(".save-btn").innerText =
-        "💾 নোট Save করুন";
+    document.getElementById(
+        "noteTitle"
+    ).value="";
+
+
+    document.getElementById(
+        "noteText"
+    ).value="";
+
 
     loadNotes();
+
 }
 
+
+/* ================= LOAD NOTES ================= */
 
 function loadNotes(){
 
     let notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
+        JSON.parse(
+            localStorage.getItem("notes")
+        ) || [];
+
 
     let list =
-        document.getElementById("notesList");
+        document.getElementById(
+            "notesList"
+        );
+
 
     list.innerHTML="";
 
-    if(notes.length === 0){
+
+    if(notes.length===0){
 
         list.innerHTML =
             "<p style='color:#777'>এখনও কোনো নোট নেই।</p>";
 
         return;
+
     }
 
-    notes.forEach(function(note,index){
 
-        let div =
-            document.createElement("div");
+    notes.forEach(
+        function(note,index){
 
-        div.className="note";
+            let div =
+                document.createElement(
+                    "div"
+                );
 
-        div.innerHTML = `
-            <h3>📝 ${escapeHTML(note.title)}</h3>
 
-            <div>
-                ${escapeHTML(note.text).replace(/\n/g,"<br>")}
-            </div>
+            div.className="note";
 
-            <small style="color:#777">
-                ${note.date}
-            </small>
 
-            <div class="note-buttons">
+            div.innerHTML =
 
-                <button
-                    class="edit"
-                    onclick="editNote(${index})">
-                    ✏️ Edit
-                </button>
+                "<div class='note-title'>"+
+                "📝 "+
+                escapeHTML(note.title)+
+                "</div>"+
 
-                <button
-                    class="delete"
-                    onclick="deleteNote(${index})">
-                    🗑️ Delete
-                </button>
+                "<div class='note-text'>"+
+                escapeHTML(note.text)
+                .replace(/\n/g,"<br>")+
+                "</div>"+
 
-            </div>
-        `;
+                "<div class='note-date'>"+
+                note.date+
+                "</div>"+
 
-        list.appendChild(div);
-    });
+                "<div class='note-buttons'>"+
+
+                "<button class='edit' "+
+                "onclick='editNote("+
+                index+
+                ")'>"+
+                "✏️ Edit"+
+                "</button>"+
+
+                "<button class='delete' "+
+                "onclick='deleteNote("+
+                index+
+                ")'>"+
+                "🗑️ Delete"+
+                "</button>"+
+
+                "</div>";
+
+
+            list.appendChild(div);
+
+        }
+    );
+
 }
 
+
+/* ================= EDIT NOTE ================= */
 
 function editNote(index){
 
     let notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
+        JSON.parse(
+            localStorage.getItem("notes")
+        ) || [];
 
-    let note = notes[index];
 
-    document.getElementById("noteTitle").value =
-        note.title;
+    document.getElementById(
+        "noteTitle"
+    ).value =
+        notes[index].title;
 
-    document.getElementById("noteText").value =
-        note.text;
 
-    editingNote = index;
+    document.getElementById(
+        "noteText"
+    ).value =
+        notes[index].text;
 
-    document.querySelector(".save-btn").innerText =
-        "💾 পরিবর্তন Save করুন";
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    editingNote=index;
+
+    window.scrollTo(0,0);
+
 }
 
+
+/* ================= DELETE NOTE ================= */
 
 function deleteNote(index){
 
-    if(!confirm("এই নোটটি মুছে ফেলতে চান?")){
+    if(
+        !confirm(
+            "এই নোটটি মুছে ফেলতে চান?"
+        )
+    ){
+
         return;
+
     }
 
+
     let notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
+        JSON.parse(
+            localStorage.getItem("notes")
+        ) || [];
+
 
     notes.splice(index,1);
 
+
     localStorage.setItem(
+
         "notes",
+
         JSON.stringify(notes)
+
     );
 
+
     loadNotes();
+
 }
 
 
-/* =========================
-   SECURITY
-========================= */
+/* ================= SECURITY ================= */
 
 function escapeHTML(text){
 
-    let div = document.createElement("div");
+    let div =
+        document.createElement("div");
 
-    div.textContent = text;
+    div.textContent=text;
 
     return div.innerHTML;
+
 }
 
 
-/* =========================
-   KEYBOARD
-========================= */
+/* ================= KEYBOARD ================= */
 
-document.addEventListener("keydown",function(e){
+document.addEventListener(
+    "keydown",
+    function(e){
 
-    if(
-        /[0-9+\-*/.%]/.test(e.key)
-    ){
-        addValue(e.key);
+        if(
+            /[0-9+\-*/.%]/.test(e.key)
+        ){
+
+            addValue(e.key);
+
+        }
+
+
+        if(e.key==="Enter"){
+
+            calculate();
+
+        }
+
+
+        if(e.key==="Backspace"){
+
+            backspace();
+
+        }
+
+
+        if(e.key==="Escape"){
+
+            clearDisplay();
+
+        }
+
     }
-
-    if(e.key === "Enter"){
-        calculate();
-    }
-
-    if(e.key === "Backspace"){
-        backspace();
-    }
-
-    if(e.key === "Escape"){
-        clearDisplay();
-    }
-
-});
+);
 
 
-/* =========================
-   LOAD SAVED DATA
-========================= */
+/* ================= START ================= */
 
 loadHistory();
+
 loadNotes();
 
 </script>
 
 </body>
-  </html>
+    </html>
