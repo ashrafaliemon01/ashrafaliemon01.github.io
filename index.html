@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculator & Converter</title>
+<title>Calculator & Notes</title>
 
 <style>
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
+  margin:0;
   background:#000;
   color:#fff;
-  min-height:100vh;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+}
+
+button,input,textarea,select{
+  font-family:inherit;
 }
 
 .app{
@@ -24,10 +27,11 @@ body{
   margin:auto;
   min-height:100vh;
   background:#000;
+  position:relative;
 }
 
-/* TOP BAR */
-.topbar{
+/* HEADER */
+.header{
   height:75px;
   display:flex;
   align-items:center;
@@ -39,7 +43,7 @@ body{
 .tabs{
   display:flex;
   gap:35px;
-  font-size:24px;
+  font-size:25px;
   font-weight:bold;
 }
 
@@ -49,262 +53,369 @@ body{
 }
 
 .tab.active{
-  color:white;
+  color:#fff;
 }
 
-.menu{
+.menu-btn{
   position:absolute;
-  right:18px;
-  top:25px;
-  font-size:28px;
+  right:15px;
+  top:22px;
+  border:0;
+  background:none;
+  color:#fff;
+  font-size:30px;
   cursor:pointer;
 }
 
 /* MENU */
-.menuBox{
+.menu{
+  display:none;
   position:absolute;
-  right:15px;
+  right:12px;
   top:65px;
   width:190px;
   background:#202020;
   border-radius:18px;
-  padding:10px;
-  display:none;
-  z-index:100;
-  box-shadow:0 10px 30px #000;
+  overflow:hidden;
+  z-index:50;
+  box-shadow:0 10px 40px #000;
 }
 
-.menuBox button{
-  width:100%;
-  border:0;
-  background:transparent;
-  color:white;
-  text-align:left;
-  padding:15px;
+.menu div{
+  padding:18px;
   font-size:17px;
-  border-radius:12px;
+  cursor:pointer;
 }
 
-.menuBox button:hover{
-  background:#333;
+.menu div:hover{
+  background:#303030;
 }
 
-/* DISPLAY */
+/* CALCULATOR */
+.calculator{
+  padding:25px 20px 30px;
+}
+
 .display{
   min-height:270px;
-  padding:25px 25px 10px;
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
   align-items:flex-end;
+  padding:15px;
   overflow:hidden;
 }
 
 .expression{
   color:#777;
-  font-size:24px;
-  min-height:40px;
+  font-size:20px;
+  min-height:35px;
   word-break:break-all;
   text-align:right;
 }
 
 .result{
-  font-size:38px;
+  font-size:40px;
   font-weight:bold;
-  margin-top:20px;
   word-break:break-all;
   text-align:right;
+  margin-top:15px;
 }
 
-/* BUTTONS */
-.buttons{
-  padding:15px;
+.keys{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:12px;
+  gap:15px;
 }
 
-.btn{
-  height:75px;
+.key{
+  height:72px;
   border:0;
   border-radius:25px;
   background:#252525;
-  color:white;
+  color:#fff;
   font-size:28px;
   cursor:pointer;
 }
 
-.btn:active{
-  transform:scale(.95);
+.key:active{
+  transform:scale(.96);
 }
 
 .operator{
-  color:#ff8a00;
+  color:#ff8c00;
 }
 
 .equal{
-  background:#ff8500;
-  color:white;
+  background:#ff8c00;
+  color:#fff;
 }
 
 /* CONVERTER */
 .converter{
   display:none;
-  padding:20px;
+  padding:25px 20px;
 }
 
-.converterGrid{
+.converter-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:30px 10px;
-  padding-top:25px;
+  gap:35px 15px;
 }
 
-.converterItem{
+.converter-item{
   text-align:center;
   cursor:pointer;
-  padding:15px 5px;
-  border-radius:18px;
 }
 
-.converterItem:hover{
-  background:#171717;
+.converter-icon{
+  font-size:42px;
+  height:55px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.icon{
-  font-size:38px;
-  margin-bottom:12px;
-}
-
-.converterItem span{
+.converter-name{
+  margin-top:12px;
+  color:#ddd;
   font-size:16px;
 }
 
-/* CONVERTER SCREEN */
-.converterScreen{
+/* CONVERTER PAGE */
+.converter-page{
   display:none;
   padding:20px;
 }
 
 .back{
-  font-size:30px;
+  font-size:32px;
   cursor:pointer;
   margin-bottom:20px;
 }
 
-.converterTitle{
-  font-size:27px;
-  font-weight:bold;
-  margin-bottom:25px;
+.converter-page h2{
+  font-size:28px;
+  margin:0 0 25px;
 }
 
-.inputBox{
-  margin-bottom:20px;
+.field{
+  background:#202020;
+  padding:15px;
+  border-radius:18px;
+  margin-bottom:15px;
 }
 
-.inputBox label{
+.field label{
   display:block;
-  color:#aaa;
+  color:#999;
   margin-bottom:8px;
 }
 
-.inputBox input,
-.inputBox select{
+.field input,
+.field select{
   width:100%;
-  height:55px;
-  background:#202020;
-  border:1px solid #444;
-  color:white;
-  border-radius:15px;
-  padding:10px;
+  border:0;
+  outline:0;
+  background:#111;
+  color:#fff;
+  padding:15px;
+  border-radius:12px;
   font-size:18px;
 }
 
-.convertResult{
-  margin-top:25px;
-  background:#171717;
-  padding:25px;
+.convert-result{
+  background:#252525;
   border-radius:20px;
+  padding:25px;
   font-size:24px;
+  margin-top:20px;
   text-align:center;
 }
 
-.convertBtn{
-  width:100%;
-  height:55px;
-  border:0;
-  border-radius:18px;
-  background:#ff8500;
-  color:white;
-  font-size:20px;
-  margin-top:10px;
-}
-
 /* HISTORY */
-.history{
+.page{
   display:none;
   padding:20px;
 }
 
-.historyHeader{
+.page-title{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
+  font-size:28px;
+  font-weight:bold;
   margin-bottom:25px;
 }
 
-.historyHeader h2{
-  font-size:28px;
+.history-item{
+  padding:20px 10px;
+  border-bottom:1px solid #222;
+  font-size:20px;
 }
 
-.deleteHistory{
-  font-size:25px;
+.history-date{
+  color:#777;
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+.delete-btn{
+  background:none;
+  border:0;
+  color:#ff8c00;
+  font-size:16px;
   cursor:pointer;
 }
 
-.historyItem{
-  padding:20px 5px;
-  border-bottom:1px solid #222;
-  font-size:20px;
-  text-align:right;
+/* NOTES */
+.notes-page{
+  display:none;
+  padding:20px;
+  padding-bottom:100px;
 }
 
-.historyDate{
+.notes-title{
+  font-size:40px;
+  margin-bottom:25px;
+}
+
+.folder-tabs{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  padding-bottom:15px;
+}
+
+.folder-tab{
+  background:#222;
+  border:0;
+  color:#bbb;
+  padding:12px 18px;
+  border-radius:25px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+.folder-tab.active{
+  color:#fff;
+  background:#333;
+}
+
+.note-card{
+  background:#242424;
+  border-radius:25px;
+  padding:22px;
+  margin-bottom:18px;
+  cursor:pointer;
+}
+
+.note-card h3{
+  margin:0 0 10px;
+  font-size:20px;
+}
+
+.note-preview{
+  color:#aaa;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.note-time{
   color:#777;
   font-size:14px;
-  margin-bottom:8px;
+  margin-top:15px;
 }
 
-.empty{
-  text-align:center;
-  color:#666;
-  margin-top:100px;
+.add-note{
+  position:fixed;
+  right:25px;
+  bottom:30px;
+  width:65px;
+  height:65px;
+  border:0;
+  border-radius:50%;
+  background:#ffad00;
+  color:#fff;
+  font-size:40px;
+  cursor:pointer;
+}
+
+/* NOTE EDITOR */
+.editor{
+  display:none;
+  padding:20px;
+}
+
+.editor input,
+.editor textarea{
+  width:100%;
+  background:#181818;
+  border:0;
+  outline:0;
+  color:#fff;
+  border-radius:15px;
+  padding:15px;
+  font-size:18px;
+  margin-bottom:15px;
+}
+
+.editor textarea{
+  min-height:350px;
+  resize:none;
+}
+
+.save-note{
+  width:100%;
+  border:0;
+  background:#ff9d00;
+  color:#fff;
+  padding:16px;
+  border-radius:18px;
   font-size:20px;
+  cursor:pointer;
 }
 
-/* MOBILE */
-@media(max-width:450px){
+/* FOLDERS */
+.folders{
+  display:none;
+  padding:20px;
+}
 
+.folder-card{
+  background:#242424;
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:15px;
+  display:flex;
+  justify-content:space-between;
+  font-size:19px;
+  cursor:pointer;
+}
+
+.new-folder{
+  text-align:center;
+  padding:25px;
+  background:#242424;
+  border-radius:22px;
+  cursor:pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width:400px){
   .tabs{
-    font-size:21px;
+    font-size:22px;
     gap:25px;
   }
 
-  .display{
-    min-height:250px;
-  }
-
-  .btn{
-    height:70px;
+  .key{
+    height:65px;
     font-size:25px;
   }
 
-  .converterGrid{
-    gap:20px 5px;
-  }
-
-  .icon{
-    font-size:32px;
+  .display{
+    min-height:240px;
   }
 }
 </style>
@@ -314,157 +425,165 @@ body{
 
 <div class="app">
 
-<!-- TOP -->
-<div class="topbar">
+<!-- HEADER -->
+<div class="header">
 
   <div class="tabs">
-    <div class="tab active" id="calculatorTab" onclick="showCalculator()">
+    <div class="tab active" id="calcTab" onclick="showMain('calculator')">
       Calculator
     </div>
 
-    <div class="tab" id="converterTab" onclick="showConverter()">
+    <div class="tab" id="convTab" onclick="showMain('converter')">
       Converter
     </div>
   </div>
 
-  <div class="menu" onclick="toggleMenu()">⋮</div>
+  <button class="menu-btn" onclick="toggleMenu()">⋮</button>
 
-  <div class="menuBox" id="menuBox">
-    <button onclick="showHistory()">🕘 History</button>
+  <div class="menu" id="menu">
+    <div onclick="showHistory()">🕘 History</div>
+    <div onclick="showNotes()">📝 Notes</div>
+    <div onclick="showFolders()">📁 Folders</div>
   </div>
 
 </div>
 
 
 <!-- CALCULATOR -->
-<div id="calculator">
+<div class="calculator" id="calculator">
 
   <div class="display">
-
     <div class="expression" id="expression"></div>
-
     <div class="result" id="result">0</div>
-
   </div>
 
-  <div class="buttons">
+  <div class="keys">
 
-    <button class="btn operator" onclick="clearCalc()">C</button>
-    <button class="btn operator" onclick="backspace()">⌫</button>
-    <button class="btn operator" onclick="percentage()">%</button>
-    <button class="btn operator" onclick="addOperator('/')">÷</button>
+    <button class="key operator" onclick="clearCalc()">C</button>
+    <button class="key operator" onclick="backspace()">⌫</button>
+    <button class="key operator" onclick="percent()">%</button>
+    <button class="key operator" onclick="press('/')">÷</button>
 
-    <button class="btn" onclick="addNumber('7')">7</button>
-    <button class="btn" onclick="addNumber('8')">8</button>
-    <button class="btn" onclick="addNumber('9')">9</button>
-    <button class="btn operator" onclick="addOperator('*')">×</button>
+    <button class="key" onclick="press('7')">7</button>
+    <button class="key" onclick="press('8')">8</button>
+    <button class="key" onclick="press('9')">9</button>
+    <button class="key operator" onclick="press('*')">×</button>
 
-    <button class="btn" onclick="addNumber('4')">4</button>
-    <button class="btn" onclick="addNumber('5')">5</button>
-    <button class="btn" onclick="addNumber('6')">6</button>
-    <button class="btn operator" onclick="addOperator('-')">−</button>
+    <button class="key" onclick="press('4')">4</button>
+    <button class="key" onclick="press('5')">5</button>
+    <button class="key" onclick="press('6')">6</button>
+    <button class="key operator" onclick="press('-')">−</button>
 
-    <button class="btn" onclick="addNumber('1')">1</button>
-    <button class="btn" onclick="addNumber('2')">2</button>
-    <button class="btn" onclick="addNumber('3')">3</button>
-    <button class="btn operator" onclick="addOperator('+')">+</button>
+    <button class="key" onclick="press('1')">1</button>
+    <button class="key" onclick="press('2')">2</button>
+    <button class="key" onclick="press('3')">3</button>
+    <button class="key operator" onclick="press('+')">+</button>
 
-    <button class="btn operator" onclick="addNumber('00')">00</button>
-    <button class="btn" onclick="addNumber('0')">0</button>
-    <button class="btn" onclick="addNumber('.')">.</button>
-    <button class="btn equal" onclick="calculate()">=</button>
+    <button class="key" onclick="press('00')">00</button>
+    <button class="key" onclick="press('0')">0</button>
+    <button class="key" onclick="press('.')">.</button>
+    <button class="key equal" onclick="calculate()">=</button>
 
   </div>
-
 </div>
 
 
-<!-- CONVERTER LIST -->
+<!-- CONVERTER -->
 <div class="converter" id="converter">
 
-  <div class="converterGrid">
+  <div class="converter-grid">
 
-    <div class="converterItem" onclick="openConverter('Currency')">
-      <div class="icon">💱</div>
-      <span>Currency</span>
+    <div class="converter-item" onclick="openConverter('currency')">
+      <div class="converter-icon">💱</div>
+      <div class="converter-name">Currency</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Length')">
-      <div class="icon">📏</div>
-      <span>Length</span>
+    <div class="converter-item" onclick="openConverter('length')">
+      <div class="converter-icon">📏</div>
+      <div class="converter-name">Length</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Mass')">
-      <div class="icon">⚖️</div>
-      <span>Mass</span>
+    <div class="converter-item" onclick="openConverter('mass')">
+      <div class="converter-icon">⚖️</div>
+      <div class="converter-name">Mass</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Area')">
-      <div class="icon">▣</div>
-      <span>Area</span>
+    <div class="converter-item" onclick="openConverter('area')">
+      <div class="converter-icon">▧</div>
+      <div class="converter-name">Area</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Time')">
-      <div class="icon">◷</div>
-      <span>Time</span>
+    <div class="converter-item" onclick="openConverter('time')">
+      <div class="converter-icon">◷</div>
+      <div class="converter-name">Time</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Data')">
-      <div class="icon">💾</div>
-      <span>Data</span>
+    <div class="converter-item" onclick="openConverter('data')">
+      <div class="converter-icon">💾</div>
+      <div class="converter-name">Data</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Discount')">
-      <div class="icon">🏷️</div>
-      <span>Discount</span>
+    <div class="converter-item" onclick="openConverter('discount')">
+      <div class="converter-icon">🏷️</div>
+      <div class="converter-name">Discount</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Volume')">
-      <div class="icon">⬡</div>
-      <span>Volume</span>
+    <div class="converter-item" onclick="openConverter('volume')">
+      <div class="converter-icon">⬡</div>
+      <div class="converter-name">Volume</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Numeral System')">
-      <div class="icon">🔢</div>
-      <span>Numeral System</span>
+    <div class="converter-item" onclick="openConverter('numeral')">
+      <div class="converter-icon">🔢</div>
+      <div class="converter-name">Numeral system</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Speed')">
-      <div class="icon">◉</div>
-      <span>Speed</span>
+    <div class="converter-item" onclick="openConverter('speed')">
+      <div class="converter-icon">◕</div>
+      <div class="converter-name">Speed</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Temperature')">
-      <div class="icon">🌡️</div>
-      <span>Temperature</span>
+    <div class="converter-item" onclick="openConverter('temperature')">
+      <div class="converter-icon">🌡️</div>
+      <div class="converter-name">Temperature</div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('BMI')">
-      <div class="icon">⚖</div>
-      <span>BMI</span>
+    <div class="converter-item" onclick="openConverter('bmi')">
+      <div class="converter-icon">⚖</div>
+      <div class="converter-name">BMI</div>
     </div>
 
   </div>
-
 </div>
 
 
-<!-- CONVERTER SCREEN -->
-<div class="converterScreen" id="converterScreen">
+<!-- CONVERTER PAGE -->
+<div class="converter-page" id="converterPage">
 
-  <div class="back" onclick="backToConverters()">←</div>
+  <div class="back" onclick="backConverter()">‹</div>
 
-  <div class="converterTitle" id="converterTitle">
-    Converter
+  <h2 id="converterTitle">Currency</h2>
+
+  <div class="field">
+    <label>Amount</label>
+    <input type="number" id="convertAmount" value="1">
   </div>
 
-  <div id="converterInputs"></div>
+  <div class="field">
+    <label>From</label>
+    <select id="fromCurrency"></select>
+  </div>
 
-  <button class="convertBtn" onclick="doConvert()">
+  <div class="field">
+    <label>To</label>
+    <select id="toCurrency"></select>
+  </div>
+
+  <button class="save-note" onclick="convertCurrency()">
     Convert
   </button>
 
-  <div class="convertResult" id="convertResult">
+  <div class="convert-result" id="convertResult">
     Result will appear here
   </div>
 
@@ -472,19 +591,96 @@ body{
 
 
 <!-- HISTORY -->
-<div class="history" id="history">
+<div class="page" id="historyPage">
 
-  <div class="historyHeader">
-
-    <h2>History</h2>
-
-    <div class="deleteHistory" onclick="clearHistory()">
-      🗑️
-    </div>
-
+  <div class="page-title">
+    <span>History</span>
+    <button class="delete-btn" onclick="clearHistory()">Delete all</button>
   </div>
 
   <div id="historyList"></div>
+
+</div>
+
+
+<!-- NOTES -->
+<div class="notes-page" id="notesPage">
+
+  <div class="notes-title">Notes</div>
+
+  <div class="folder-tabs">
+    <button class="folder-tab active">All</button>
+    <button class="folder-tab">Ashraf Ali Emon</button>
+    <button class="folder-tab">Coding</button>
+    <button class="folder-tab">CODING</button>
+  </div>
+
+  <div id="notesList"></div>
+
+  <button class="add-note" onclick="openEditor()">+</button>
+
+</div>
+
+
+<!-- NOTE EDITOR -->
+<div class="editor" id="editor">
+
+  <div class="back" onclick="showNotes()">‹</div>
+
+  <h2>New Note</h2>
+
+  <input id="noteTitle" placeholder="Note title">
+
+  <textarea id="noteContent" placeholder="Write your note here..."></textarea>
+
+  <button class="save-note" onclick="saveNote()">
+    Save Note
+  </button>
+
+</div>
+
+
+<!-- FOLDERS -->
+<div class="folders" id="folders">
+
+  <div class="page-title">
+    <span>Folders</span>
+  </div>
+
+  <div class="folder-card">
+    <span>✓ &nbsp; All</span>
+    <span id="allCount">0</span>
+  </div>
+
+  <div class="folder-card">
+    <span>📝 &nbsp; Ashraf Ali Emon</span>
+    <span>0</span>
+  </div>
+
+  <div class="folder-card">
+    <span>💻 &nbsp; Coding</span>
+    <span>0</span>
+  </div>
+
+  <div class="folder-card">
+    <span>💻 &nbsp; CODING</span>
+    <span>0</span>
+  </div>
+
+  <div class="folder-card">
+    <span>🔐 &nbsp; Password</span>
+    <span>0</span>
+  </div>
+
+  <div class="folder-card">
+    <span>📂 &nbsp; Uncategorised</span>
+    <span id="uncategorisedCount">0</span>
+  </div>
+
+  <div class="new-folder" onclick="newFolder()">
+    <div style="font-size:30px;color:#ffad00">+</div>
+    New folder
+  </div>
 
 </div>
 
@@ -498,126 +694,113 @@ body{
 ========================= */
 
 let current = "";
-let previous = "";
-let operator = "";
+let expression = "";
 
-const result = document.getElementById("result");
-const expression = document.getElementById("expression");
-
-function addNumber(num){
-
-  if(num === "." && current.includes(".")) return;
-
-  current += num;
-
-  result.innerText = current;
+function press(value){
+  current += value;
+  document.getElementById("result").innerText = current;
 }
 
-function addOperator(op){
+function clearCalc(){
+  current="";
+  expression="";
+  document.getElementById("expression").innerText="";
+  document.getElementById("result").innerText="0";
+}
 
-  if(current === "" && previous === "") return;
+function backspace(){
+  current=current.slice(0,-1);
+  document.getElementById("result").innerText=current || "0";
+}
 
-  if(current !== ""){
-
-    if(previous !== ""){
-      calculate();
-    }
-
-    previous = current;
-    current = "";
-
+function percent(){
+  if(current){
+    current=(parseFloat(current)/100).toString();
+    document.getElementById("result").innerText=current;
   }
-
-  operator = op;
-
-  expression.innerText =
-    previous + " " + displayOperator(op);
-}
-
-function displayOperator(op){
-
-  if(op === "*") return "×";
-  if(op === "/") return "÷";
-  if(op === "-") return "−";
-
-  return op;
 }
 
 function calculate(){
 
-  if(previous === "" || current === "" || operator === "") return;
+  if(!current) return;
 
-  let a = parseFloat(previous);
-  let b = parseFloat(current);
-  let answer;
+  try{
 
-  if(operator === "+") answer = a + b;
-  if(operator === "-") answer = a - b;
-  if(operator === "*") answer = a * b;
-  if(operator === "/"){
+    let safe=current.replace(/×/g,"*").replace(/÷/g,"/");
 
-    if(b === 0){
-      result.innerText = "Error";
-      return;
-    }
+    let result=Function('"use strict";return ('+safe+')')();
 
-    answer = a / b;
+    expression=current;
+    current=result.toString();
+
+    document.getElementById("expression").innerText=expression+" =";
+    document.getElementById("result").innerText=current;
+
+    saveHistory(expression+" = "+current);
+
+  }catch(e){
+
+    document.getElementById("result").innerText="Error";
+
+  }
+}
+
+
+/* =========================
+   MAIN TABS
+========================= */
+
+function showMain(page){
+
+  closeAll();
+
+  if(page==="calculator"){
+
+    document.getElementById("calculator").style.display="block";
+
+    document.getElementById("calcTab").classList.add("active");
+    document.getElementById("convTab").classList.remove("active");
+
+  }else{
+
+    document.getElementById("converter").style.display="block";
+
+    document.getElementById("convTab").classList.add("active");
+    document.getElementById("calcTab").classList.remove("active");
+
   }
 
-  let exp =
-    previous + " " +
-    displayOperator(operator) + " " +
-    current;
-
-  expression.innerText = exp + " =";
-
-  result.innerText = formatNumber(answer);
-
-  saveHistory(exp + " = " + formatNumber(answer));
-
-  current = String(answer);
-  previous = "";
-  operator = "";
 }
 
-function formatNumber(num){
 
-  if(!isFinite(num)) return "Error";
+/* =========================
+   MENU
+========================= */
 
-  return Number(num.toFixed(12)).toLocaleString("en-US",{
-    maximumFractionDigits:12
-  });
+function toggleMenu(){
+
+  let menu=document.getElementById("menu");
+
+  menu.style.display=
+    menu.style.display==="block" ? "none" : "block";
+
 }
 
-function clearCalc(){
 
-  current = "";
-  previous = "";
-  operator = "";
+/* =========================
+   CLOSE ALL
+========================= */
 
-  expression.innerText = "";
-  result.innerText = "0";
-}
+function closeAll(){
 
-function backspace(){
+  document.getElementById("calculator").style.display="none";
+  document.getElementById("converter").style.display="none";
+  document.getElementById("converterPage").style.display="none";
+  document.getElementById("historyPage").style.display="none";
+  document.getElementById("notesPage").style.display="none";
+  document.getElementById("editor").style.display="none";
+  document.getElementById("folders").style.display="none";
 
-  current = current.slice(0,-1);
-
-  result.innerText = current || "0";
-}
-
-function percentage(){
-
-  if(current !== ""){
-
-    let old = current;
-
-    current = String(parseFloat(current)/100);
-
-    result.innerText = current;
-
-    saveHistory(old + "% = " + current);
-  }
 }
 
 
@@ -625,82 +808,243 @@ function percentage(){
    HISTORY
 ========================= */
 
-function getHistory(){
-
-  return JSON.parse(localStorage.getItem("calculatorHistory") || "[]");
-
-}
-
 function saveHistory(text){
 
-  let history = getHistory();
+  let history=JSON.parse(localStorage.getItem("history")||"[]");
 
   history.unshift({
     text:text,
     date:new Date().toLocaleString()
   });
 
-  if(history.length > 100){
-    history.pop();
-  }
-
-  localStorage.setItem(
-    "calculatorHistory",
-    JSON.stringify(history)
-  );
+  localStorage.setItem("history",JSON.stringify(history));
 
 }
 
 function showHistory(){
 
-  document.getElementById("menuBox").style.display="none";
+  closeAll();
 
-  document.getElementById("calculator").style.display="none";
-  document.getElementById("converter").style.display="none";
-  document.getElementById("converterScreen").style.display="none";
-  document.getElementById("history").style.display="block";
+  document.getElementById("historyPage").style.display="block";
 
-  renderHistory();
+  let history=JSON.parse(localStorage.getItem("history")||"[]");
 
-}
+  let list=document.getElementById("historyList");
 
-function renderHistory(){
+  list.innerHTML="";
 
-  let list = document.getElementById("historyList");
+  if(history.length===0){
 
-  let history = getHistory();
-
-  if(history.length === 0){
-
-    list.innerHTML =
-      '<div class="empty">No calculation history</div>';
+    list.innerHTML='<div style="color:#777;text-align:center;margin-top:80px">No history</div>';
 
     return;
+
   }
 
-  list.innerHTML = history.map(item => `
+  history.forEach(item=>{
 
-    <div class="historyItem">
+    list.innerHTML+=`
 
-      <div class="historyDate">
-        ${item.date}
+      <div class="history-item">
+
+        <div class="history-date">
+          ${item.date}
+        </div>
+
+        ${item.text}
+
       </div>
 
-      ${item.text}
+    `;
 
-    </div>
-
-  `).join("");
+  });
 
 }
 
 function clearHistory(){
 
-  if(confirm("Delete all history?")){
+  localStorage.removeItem("history");
 
-    localStorage.removeItem("calculatorHistory");
+  showHistory();
 
-    renderHistory();
+}
+
+
+/* =========================
+   NOTES
+========================= */
+
+function getNotes(){
+
+  return JSON.parse(localStorage.getItem("notes")||"[]");
+
+}
+
+function showNotes(){
+
+  closeAll();
+
+  document.getElementById("notesPage").style.display="block";
+
+  renderNotes();
+
+}
+
+function renderNotes(){
+
+  let notes=getNotes();
+
+  let list=document.getElementById("notesList");
+
+  list.innerHTML="";
+
+  if(notes.length===0){
+
+    list.innerHTML=`
+
+      <div style="
+        text-align:center;
+        color:#777;
+        margin-top:100px;
+        font-size:18px">
+
+        No notes yet<br>
+        Tap + to create a note
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  notes.forEach((note,index)=>{
+
+    let preview=note.content.replace(/\n/g," ");
+
+    list.innerHTML+=`
+
+      <div class="note-card" onclick="openNote(${index})">
+
+        <h3>${escapeHTML(note.title)}</h3>
+
+        <div class="note-preview">
+          ${escapeHTML(preview)}
+        </div>
+
+        <div class="note-time">
+          ${note.date}
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+function openEditor(){
+
+  closeAll();
+
+  document.getElementById("editor").style.display="block";
+
+  document.getElementById("noteTitle").value="";
+  document.getElementById("noteContent").value="";
+
+}
+
+function saveNote(){
+
+  let title=document.getElementById("noteTitle").value.trim();
+
+  let content=document.getElementById("noteContent").value.trim();
+
+  if(!title){
+
+    title="Untitled Note";
+
+  }
+
+  if(!content){
+
+    alert("নোটের লেখা লিখুন");
+
+    return;
+
+  }
+
+  let notes=getNotes();
+
+  notes.unshift({
+
+    title:title,
+
+    content:content,
+
+    date:new Date().toLocaleString()
+
+  });
+
+  localStorage.setItem("notes",JSON.stringify(notes));
+
+  showNotes();
+
+}
+
+function openNote(index){
+
+  let notes=getNotes();
+
+  let note=notes[index];
+
+  closeAll();
+
+  document.getElementById("editor").style.display="block";
+
+  document.getElementById("noteTitle").value=note.title;
+
+  document.getElementById("noteContent").value=note.content;
+
+}
+
+function escapeHTML(text){
+
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+
+/* =========================
+   FOLDERS
+========================= */
+
+function showFolders(){
+
+  closeAll();
+
+  document.getElementById("folders").style.display="block";
+
+  let notes=getNotes();
+
+  document.getElementById("allCount").innerText=notes.length;
+
+  document.getElementById("uncategorisedCount").innerText=notes.length;
+
+}
+
+function newFolder(){
+
+  let name=prompt("Folder name লিখুন:");
+
+  if(name){
+
+    alert(name+" folder তৈরি করার জায়গা রাখা হয়েছে।");
 
   }
 
@@ -708,630 +1052,165 @@ function clearHistory(){
 
 
 /* =========================
-   MAIN NAVIGATION
+   CURRENCY
 ========================= */
 
-function showCalculator(){
+const currencies={
 
-  document.getElementById("calculator").style.display="block";
-
-  document.getElementById("converter").style.display="none";
-
-  document.getElementById("converterScreen").style.display="none";
-
-  document.getElementById("history").style.display="none";
-
-  document.getElementById("calculatorTab").classList.add("active");
-
-  document.getElementById("converterTab").classList.remove("active");
-
-}
-
-function showConverter(){
-
-  document.getElementById("calculator").style.display="none";
-
-  document.getElementById("converter").style.display="block";
-
-  document.getElementById("converterScreen").style.display="none";
-
-  document.getElementById("history").style.display="none";
-
-  document.getElementById("calculatorTab").classList.remove("active");
-
-  document.getElementById("converterTab").classList.add("active");
-
-}
-
-function toggleMenu(){
-
-  let menu = document.getElementById("menuBox");
-
-  menu.style.display =
-    menu.style.display === "block"
-    ? "none"
-    : "block";
-
-}
+  BDT:"🇧🇩 Bangladesh - BDT",
+  USD:"🇺🇸 USA - USD",
+  EUR:"🇪🇺 Euro - EUR",
+  GBP:"🇬🇧 United Kingdom - GBP",
+  INR:"🇮🇳 India - INR",
+  PKR:"🇵🇰 Pakistan - PKR",
+  SAR:"🇸🇦 Saudi Arabia - SAR",
+  AED:"🇦🇪 UAE - AED",
+  QAR:"🇶🇦 Qatar - QAR",
+  KWD:"🇰🇼 Kuwait - KWD",
+  MYR:"🇲🇾 Malaysia - MYR",
+  SGD:"🇸🇬 Singapore - SGD",
+  CNY:"🇨🇳 China - CNY",
+  JPY:"🇯🇵 Japan - JPY",
+  KRW:"🇰🇷 South Korea - KRW",
+  CAD:"🇨🇦 Canada - CAD",
+  AUD:"🇦🇺 Australia - AUD",
+  TRY:"🇹🇷 Turkey - TRY",
+  CHF:"🇨🇭 Switzerland - CHF",
+  RUB:"🇷🇺 Russia - RUB",
+  NZD:"🇳🇿 New Zealand - NZD",
+  THB:"🇹🇭 Thailand - THB",
+  IDR:"🇮🇩 Indonesia - IDR",
+  HKD:"🇭🇰 Hong Kong - HKD"
+};
 
 
 /* =========================
-   CONVERTER
+   OPEN CONVERTER
 ========================= */
-
-let activeConverter = "";
 
 function openConverter(type){
 
-  activeConverter = type;
+  if(type!=="currency"){
 
-  document.getElementById("converter").style.display="none";
+    alert("এই Converter-টি পরের ধাপে আরও বিস্তারিত করা যাবে।");
 
-  document.getElementById("converterScreen").style.display="block";
+    return;
 
-  document.getElementById("converterTitle").innerText = type;
+  }
 
-  createInputs(type);
+  closeAll();
+
+  document.getElementById("converterPage").style.display="block";
+
+  document.getElementById("converterTitle").innerText="Currency";
+
+  let from=document.getElementById("fromCurrency");
+  let to=document.getElementById("toCurrency");
+
+  from.innerHTML="";
+  to.innerHTML="";
+
+  for(let code in currencies){
+
+    from.innerHTML+=`
+      <option value="${code}">
+        ${currencies[code]}
+      </option>
+    `;
+
+    to.innerHTML+=`
+      <option value="${code}">
+        ${currencies[code]}
+      </option>
+    `;
+
+  }
+
+  from.value="BDT";
+  to.value="USD";
 
 }
 
-function backToConverters(){
+function backConverter(){
 
-  document.getElementById("converterScreen").style.display="none";
+  closeAll();
 
   document.getElementById("converter").style.display="block";
 
 }
 
-function createInputs(type){
-
-  let box = document.getElementById("converterInputs");
-
-  if(type === "Temperature"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Value</label>
-        <input id="value1" type="number" placeholder="Enter value">
-      </div>
-
-      <div class="inputBox">
-        <label>From</label>
-        <select id="fromUnit">
-          <option value="C">Celsius</option>
-          <option value="F">Fahrenheit</option>
-          <option value="K">Kelvin</option>
-        </select>
-      </div>
-
-      <div class="inputBox">
-        <label>To</label>
-        <select id="toUnit">
-          <option value="C">Celsius</option>
-          <option value="F">Fahrenheit</option>
-          <option value="K">Kelvin</option>
-        </select>
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  if(type === "BMI"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Weight (kg)</label>
-        <input id="weight" type="number">
-      </div>
-
-      <div class="inputBox">
-        <label>Height (cm)</label>
-        <input id="height" type="number">
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  let units = {
-
-    "Length":[
-      ["Meter","m"],
-      ["Kilometer","km"],
-      ["Centimeter","cm"],
-      ["Millimeter","mm"],
-      ["Mile","mile"],
-      ["Foot","ft"],
-      ["Inch","inch"]
-    ],
-
-    "Mass":[
-      ["Kilogram","kg"],
-      ["Gram","g"],
-      ["Milligram","mg"],
-      ["Pound","lb"],
-      ["Ounce","oz"]
-    ],
-
-    "Area":[
-      ["Square meter","m2"],
-      ["Square kilometer","km2"],
-      ["Square foot","ft2"],
-      ["Acre","acre"]
-    ],
-
-    "Time":[
-      ["Second","sec"],
-      ["Minute","min"],
-      ["Hour","hour"],
-      ["Day","day"],
-      ["Week","week"]
-    ],
-
-    "Data":[
-      ["Byte","B"],
-      ["Kilobyte","KB"],
-      ["Megabyte","MB"],
-      ["Gigabyte","GB"],
-      ["Terabyte","TB"]
-    ],
-
-    "Volume":[
-      ["Liter","L"],
-      ["Milliliter","mL"],
-      ["Cubic meter","m3"],
-      ["Gallon","gal"]
-    ],
-
-    "Speed":[
-      ["m/s","ms"],
-      ["km/h","kmh"],
-      ["mph","mph"]
-    ]
-
-  };
-
-  if(units[type]){
-
-    let options = units[type].map(
-      u => `<option value="${u[1]}">${u[0]}</option>`
-    ).join("");
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Value</label>
-        <input id="value1" type="number" placeholder="Enter value">
-      </div>
-
-      <div class="inputBox">
-        <label>From</label>
-        <select id="fromUnit">
-          ${options}
-        </select>
-      </div>
-
-      <div class="inputBox">
-        <label>To</label>
-        <select id="toUnit">
-          ${options}
-        </select>
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  if(type === "Discount"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Original Price</label>
-        <input id="price" type="number">
-      </div>
-
-      <div class="inputBox">
-        <label>Discount (%)</label>
-        <input id="discount" type="number">
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  if(type === "Numeral System"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Number</label>
-        <input id="value1" type="text">
-      </div>
-
-      <div class="inputBox">
-        <label>From Base</label>
-        <select id="fromBase">
-          <option value="2">Binary</option>
-          <option value="8">Octal</option>
-          <option value="10" selected>Decimal</option>
-          <option value="16">Hexadecimal</option>
-        </select>
-      </div>
-
-      <div class="inputBox">
-        <label>To Base</label>
-        <select id="toBase">
-          <option value="2">Binary</option>
-          <option value="8">Octal</option>
-          <option value="10">Decimal</option>
-          <option value="16">Hexadecimal</option>
-        </select>
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  if(type === "Currency"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Amount</label>
-        <input id="value1" type="number">
-      </div>
-
-      <div class="inputBox">
-        <label>From</label>
-        <select id="fromCurrency">
-          <option value="BDT">Bangladesh Taka</option>
-          <option value="USD">US Dollar</option>
-          <option value="EUR">Euro</option>
-          <option value="GBP">British Pound</option>
-        </select>
-      </div>
-
-      <div class="inputBox">
-        <label>To</label>
-        <select id="toCurrency">
-          <option value="BDT">Bangladesh Taka</option>
-          <option value="USD">US Dollar</option>
-          <option value="EUR">Euro</option>
-          <option value="GBP">British Pound</option>
-        </select>
-      </div>
-
-    `;
-
-    return;
-  }
-
-}
-
 
 /* =========================
-   CONVERSION
+   LIVE CURRENCY
 ========================= */
 
-function doConvert(){
+async function convertCurrency(){
 
-  let type = activeConverter;
+  let amount=parseFloat(
+    document.getElementById("convertAmount").value
+  );
 
-  if(type === "BMI"){
+  let from=document.getElementById("fromCurrency").value;
 
-    let weight = parseFloat(
-      document.getElementById("weight").value
-    );
+  let to=document.getElementById("toCurrency").value;
 
-    let height = parseFloat(
-      document.getElementById("height").value
-    );
+  if(!amount || amount<=0){
 
-    if(!weight || !height) return;
-
-    let h = height / 100;
-
-    let bmi = weight / (h*h);
-
-    let status =
-      bmi < 18.5 ? "Underweight" :
-      bmi < 25 ? "Normal" :
-      bmi < 30 ? "Overweight" :
-      "Obese";
-
-    document.getElementById("convertResult").innerText =
-      "BMI: " + bmi.toFixed(2) + " — " + status;
+    alert("Amount দিন");
 
     return;
+
   }
 
+  let resultBox=document.getElementById("convertResult");
 
-  if(type === "Discount"){
+  resultBox.innerText="Loading...";
 
-    let price =
-      parseFloat(document.getElementById("price").value);
+  try{
 
-    let discount =
-      parseFloat(document.getElementById("discount").value);
+    let response=await fetch(
+      "https://open.er-api.com/v6/latest/"+from
+    );
 
-    if(isNaN(price) || isNaN(discount)) return;
+    let data=await response.json();
 
-    let saving = price * discount / 100;
+    if(data.result!=="success"){
 
-    let finalPrice = price - saving;
-
-    document.getElementById("convertResult").innerText =
-      "You save: " + saving.toFixed(2) +
-      " | Final price: " + finalPrice.toFixed(2);
-
-    return;
-  }
-
-
-  if(type === "Numeral System"){
-
-    let value =
-      document.getElementById("value1").value.trim();
-
-    let from =
-      parseInt(document.getElementById("fromBase").value);
-
-    let to =
-      parseInt(document.getElementById("toBase").value);
-
-    try{
-
-      let decimal = parseInt(value,from);
-
-      if(isNaN(decimal)) throw "error";
-
-      let answer = decimal.toString(to).toUpperCase();
-
-      document.getElementById("convertResult").innerText =
-        answer;
-
-    }catch(e){
-
-      document.getElementById("convertResult").innerText =
-        "Invalid number";
+      throw new Error();
 
     }
 
-    return;
+    let rate=data.rates[to];
+
+    let result=amount*rate;
+
+    resultBox.innerHTML=`
+
+      ${amount} ${from}
+      <br>
+      <strong style="font-size:32px">
+        = ${result.toLocaleString(undefined,{
+          maximumFractionDigits:4
+        })} ${to}
+      </strong>
+
+    `;
+
+  }catch(error){
+
+    resultBox.innerText=
+      "Internet connection প্রয়োজন। Currency rate পাওয়া যায়নি।";
+
   }
-
-
-  if(type === "Temperature"){
-
-    let value =
-      parseFloat(document.getElementById("value1").value);
-
-    let from =
-      document.getElementById("fromUnit").value;
-
-    let to =
-      document.getElementById("toUnit").value;
-
-    if(isNaN(value)) return;
-
-    let c;
-
-    if(from === "C") c=value;
-    if(from === "F") c=(value-32)*5/9;
-    if(from === "K") c=value-273.15;
-
-    let answer;
-
-    if(to === "C") answer=c;
-    if(to === "F") answer=c*9/5+32;
-    if(to === "K") answer=c+273.15;
-
-    document.getElementById("convertResult").innerText =
-      answer.toFixed(4);
-
-    return;
-  }
-
-
-  if(type === "Currency"){
-
-    let amount =
-      parseFloat(document.getElementById("value1").value);
-
-    let from =
-      document.getElementById("fromCurrency").value;
-
-    let to =
-      document.getElementById("toCurrency").value;
-
-    /*
-      Example rates.
-      এগুলো পরে live currency API দিয়ে
-      পরিবর্তন করা যাবে।
-    */
-
-    let rates = {
-      BDT:1,
-      USD:120,
-      EUR:140,
-      GBP:165
-    };
-
-    if(isNaN(amount)) return;
-
-    let bdt = amount * rates[from];
-
-    let answer = bdt / rates[to];
-
-    document.getElementById("convertResult").innerText =
-      answer.toFixed(4) + " " + to;
-
-    return;
-  }
-
-
-  let value =
-    parseFloat(document.getElementById("value1").value);
-
-  let from =
-    document.getElementById("fromUnit").value;
-
-  let to =
-    document.getElementById("toUnit").value;
-
-  if(isNaN(value)) return;
-
-  let answer = convertUnits(type,value,from,to);
-
-  document.getElementById("convertResult").innerText =
-    answer.toFixed(6);
 
 }
 
 
-function convertUnits(type,value,from,to){
+/* START */
 
-  if(type === "Length"){
-
-    let r = {
-      m:1,
-      km:1000,
-      cm:.01,
-      mm:.001,
-      mile:1609.344,
-      ft:.3048,
-      inch:.0254
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Mass"){
-
-    let r = {
-      kg:1,
-      g:.001,
-      mg:.000001,
-      lb:.45359237,
-      oz:.0283495
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Area"){
-
-    let r = {
-      m2:1,
-      km2:1000000,
-      ft2:.092903,
-      acre:4046.856
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Time"){
-
-    let r = {
-      sec:1,
-      min:60,
-      hour:3600,
-      day:86400,
-      week:604800
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Data"){
-
-    let r = {
-      B:1,
-      KB:1024,
-      MB:1024**2,
-      GB:1024**3,
-      TB:1024**4
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Volume"){
-
-    let r = {
-      L:1,
-      mL:.001,
-      m3:1000,
-      gal:3.78541
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Speed"){
-
-    let r = {
-      ms:1,
-      kmh:1/3.6,
-      mph:.44704
-    };
-
-    return value*r[from]/r[to];
-  }
-
-  return value;
-
-}
-
-
-/* KEYBOARD SUPPORT */
-
-document.addEventListener("keydown",function(e){
-
-  if(/[0-9.]/.test(e.key)){
-    addNumber(e.key);
-  }
-
-  if(["+","-","*","/"].includes(e.key)){
-    addOperator(e.key);
-  }
-
-  if(e.key === "Enter"){
-    calculate();
-  }
-
-  if(e.key === "Backspace"){
-    backspace();
-  }
-
-  if(e.key === "Escape"){
-    clearCalc();
-  }
-
-});
+showMain("calculator");
 
 </script>
 
 </body>
-    </html>
+      </html>
