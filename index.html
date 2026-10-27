@@ -1,1337 +1,335 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ashraf Calculator & Converter</title>
+<meta name="theme-color" content="#080d16">
+<title>ASHRAF ALI EMON | Network Scanner</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
-
+*{box-sizing:border-box}
 body{
-  background:#000;
-  color:#fff;
-  min-height:100vh;
+  margin:0;background:#080d16;color:#f4f7ff;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
 }
-
-.app{
-  max-width:600px;
-  margin:auto;
-  min-height:100vh;
-  background:#000;
+header{
+  padding:23px 18px;background:#101827;
+  border-bottom:1px solid #263348;
 }
-
-/* TOP BAR */
-.topbar{
-  height:75px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  border-bottom:1px solid #111;
+.brand{font-size:21px;font-weight:bold;letter-spacing:1px}
+.sub{color:#94a3b8;font-size:13px;margin-top:7px}
+main{max-width:650px;margin:auto;padding:18px}
+h2{font-size:21px;margin:8px 0}
+p{line-height:1.6}
+.muted{color:#9eacc0;font-size:14px}
+.status{
+  background:#111c2c;border:1px solid #293950;
+  border-radius:16px;padding:17px;margin-bottom:17px;
 }
-
-.tabs{
-  display:flex;
-  gap:35px;
-  font-size:24px;
-  font-weight:bold;
+.statusline{display:flex;align-items:center;gap:12px}
+.dot{
+  width:11px;height:11px;border-radius:50%;
+  background:#fbbf24;flex-shrink:0;
 }
-
-.tab{
-  color:#555;
-  cursor:pointer;
+.dot.good{background:#34d399}
+.dot.bad{background:#fb7185}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{
+  background:#111c2c;border:1px solid #293950;
+  border-radius:15px;padding:17px;margin-bottom:13px;
 }
-
-.tab.active{
-  color:white;
+.card h3{font-size:16px;margin:0 0 10px}
+.big{font-size:25px;font-weight:bold;margin:9px 0}
+.icon{font-size:28px;margin-bottom:12px}
+button{
+  border:0;border-radius:11px;padding:13px 15px;
+  background:#34d399;color:#062419;font-size:15px;
+  font-weight:bold;cursor:pointer;width:100%;
 }
-
-.menu{
-  position:absolute;
-  right:18px;
-  top:25px;
-  font-size:28px;
-  cursor:pointer;
+button:disabled{opacity:.6}
+.secondary{background:#243248;color:#fff}
+.danger{background:#7f2634;color:white}
+nav{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:6px;margin-bottom:18px;
 }
-
-/* MENU */
-.menuBox{
-  position:absolute;
-  right:15px;
-  top:65px;
-  width:190px;
-  background:#202020;
-  border-radius:18px;
-  padding:10px;
-  display:none;
-  z-index:100;
-  box-shadow:0 10px 30px #000;
+nav button{
+  background:#152136;color:#b9c8dd;
+  padding:12px 4px;font-size:12px;
 }
-
-.menuBox button{
-  width:100%;
-  border:0;
-  background:transparent;
-  color:white;
-  text-align:left;
-  padding:15px;
-  font-size:17px;
-  border-radius:12px;
+nav button.active{background:#34d399;color:#062419}
+.page{display:none}
+.page.active{display:block}
+.info{
+  border-left:3px solid #60a5fa;
+  padding:10px 12px;background:#132137;
+  border-radius:5px;font-size:13px;line-height:1.7;
+  margin:12px 0;
 }
-
-.menuBox button:hover{
-  background:#333;
+.row{
+  display:flex;justify-content:space-between;
+  gap:12px;padding:12px 0;
+  border-bottom:1px solid #263348;font-size:14px;
 }
-
-/* DISPLAY */
-.display{
-  min-height:270px;
-  padding:25px 25px 10px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  align-items:flex-end;
-  overflow:hidden;
+.row span:first-child{color:#9eacc0}
+.row span:last-child{text-align:right;overflow-wrap:anywhere}
+.history-item{
+  padding:14px 0;border-bottom:1px solid #293950;
+  line-height:1.7;font-size:14px;
 }
-
-.expression{
-  color:#777;
-  font-size:24px;
-  min-height:40px;
-  word-break:break-all;
-  text-align:right;
-}
-
-.result{
-  font-size:38px;
-  font-weight:bold;
-  margin-top:20px;
-  word-break:break-all;
-  text-align:right;
-}
-
-/* BUTTONS */
-.buttons{
-  padding:15px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.btn{
-  height:75px;
-  border:0;
-  border-radius:25px;
-  background:#252525;
-  color:white;
-  font-size:28px;
-  cursor:pointer;
-}
-
-.btn:active{
-  transform:scale(.95);
-}
-
-.operator{
-  color:#ff8a00;
-}
-
-.equal{
-  background:#ff8500;
-  color:white;
-}
-
-/* CONVERTER */
-.converter{
-  display:none;
-  padding:20px;
-}
-
-.converterGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:30px 10px;
-  padding-top:25px;
-}
-
-.converterItem{
-  text-align:center;
-  cursor:pointer;
-  padding:15px 5px;
-  border-radius:18px;
-}
-
-.converterItem:hover{
-  background:#171717;
-}
-
-.icon{
-  font-size:38px;
-  margin-bottom:12px;
-}
-
-.converterItem span{
-  font-size:16px;
-}
-
-/* CONVERTER SCREEN */
-.converterScreen{
-  display:none;
-  padding:20px;
-}
-
-.back{
-  font-size:30px;
-  cursor:pointer;
-  margin-bottom:20px;
-}
-
-.converterTitle{
-  font-size:27px;
-  font-weight:bold;
-  margin-bottom:25px;
-}
-
-.inputBox{
-  margin-bottom:20px;
-}
-
-.inputBox label{
-  display:block;
-  color:#aaa;
-  margin-bottom:8px;
-}
-
-.inputBox input,
-.inputBox select{
-  width:100%;
-  height:55px;
-  background:#202020;
-  border:1px solid #444;
-  color:white;
-  border-radius:15px;
-  padding:10px;
-  font-size:18px;
-}
-
-.convertResult{
-  margin-top:25px;
-  background:#171717;
-  padding:25px;
-  border-radius:20px;
-  font-size:24px;
-  text-align:center;
-}
-
-.convertBtn{
-  width:100%;
-  height:55px;
-  border:0;
-  border-radius:18px;
-  background:#ff8500;
-  color:white;
-  font-size:20px;
-  margin-top:10px;
-}
-
-/* HISTORY */
-.history{
-  display:none;
-  padding:20px;
-}
-
-.historyHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
-}
-
-.historyHeader h2{
-  font-size:28px;
-}
-
-.deleteHistory{
-  font-size:25px;
-  cursor:pointer;
-}
-
-.historyItem{
-  padding:20px 5px;
-  border-bottom:1px solid #222;
-  font-size:20px;
-  text-align:right;
-}
-
-.historyDate{
-  color:#777;
-  font-size:14px;
-  margin-bottom:8px;
-}
-
-.empty{
-  text-align:center;
-  color:#666;
-  margin-top:100px;
-  font-size:20px;
-}
-
-/* MOBILE */
-@media(max-width:450px){
-
-  .tabs{
-    font-size:21px;
-    gap:25px;
-  }
-
-  .display{
-    min-height:250px;
-  }
-
-  .btn{
-    height:70px;
-    font-size:25px;
-  }
-
-  .converterGrid{
-    gap:20px 5px;
-  }
-
-  .icon{
-    font-size:32px;
-  }
-}
+footer{text-align:center;color:#728198;font-size:12px;padding:25px}
 </style>
 </head>
 
 <body>
+<header>
+  <div class="brand">ASHRAF ALI EMON</div>
+  <div class="sub">NETWORK SCANNER & INTERNET TEST</div>
+</header>
 
-<div class="app">
+<main>
+  <section class="status">
+    <div class="statusline">
+      <div id="dot" class="dot"></div>
+      <div>
+        <strong id="connectionStatus">সংযোগ পরীক্ষা হচ্ছে...</strong>
+        <div id="connectionDetail" class="muted">আপনার ইন্টারনেট সংযোগের অবস্থা</div>
+      </div>
+    </div>
+  </section>
 
-<!-- TOP -->
-<div class="topbar">
+  <nav>
+    <button class="active" data-page="home">Home</button>
+    <button data-page="wifi">Wi-Fi</button>
+    <button data-page="mobile">Mobile</button>
+    <button data-page="history">History</button>
+  </nav>
 
-  <div class="tabs">
-    <div class="tab active" id="calculatorTab" onclick="showCalculator()">
-      Calculator
+  <section id="home" class="page active">
+    <h2>Network Dashboard</h2>
+    <p class="muted">আপনার সংযোগ পরীক্ষা করুন</p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📶</div>
+        <h3>Wi-Fi</h3>
+        <div id="wifiSummary" class="muted">তথ্য যাচাই হচ্ছে</div>
+        <p><button onclick="showPage('wifi')">Wi-Fi পরীক্ষা</button></p>
+      </div>
+      <div class="card">
+        <div class="icon">📡</div>
+        <h3>Mobile Network</h3>
+        <div id="mobileSummary" class="muted">তথ্য যাচাই হচ্ছে</div>
+        <p><button onclick="showPage('mobile')">মোবাইল পরীক্ষা</button></p>
+      </div>
     </div>
 
-    <div class="tab" id="converterTab" onclick="showConverter()">
-      Converter
-    </div>
-  </div>
-
-  <div class="menu" onclick="toggleMenu()">⋮</div>
-
-  <div class="menuBox" id="menuBox">
-    <button onclick="showHistory()">🕘 History</button>
-  </div>
-
-</div>
-
-
-<!-- CALCULATOR -->
-<div id="calculator">
-
-  <div class="display">
-
-    <div class="expression" id="expression"></div>
-
-    <div class="result" id="result">0</div>
-
-  </div>
-
-  <div class="buttons">
-
-    <button class="btn operator" onclick="clearCalc()">C</button>
-    <button class="btn operator" onclick="backspace()">⌫</button>
-    <button class="btn operator" onclick="percentage()">%</button>
-    <button class="btn operator" onclick="addOperator('/')">÷</button>
-
-    <button class="btn" onclick="addNumber('7')">7</button>
-    <button class="btn" onclick="addNumber('8')">8</button>
-    <button class="btn" onclick="addNumber('9')">9</button>
-    <button class="btn operator" onclick="addOperator('*')">×</button>
-
-    <button class="btn" onclick="addNumber('4')">4</button>
-    <button class="btn" onclick="addNumber('5')">5</button>
-    <button class="btn" onclick="addNumber('6')">6</button>
-    <button class="btn operator" onclick="addOperator('-')">−</button>
-
-    <button class="btn" onclick="addNumber('1')">1</button>
-    <button class="btn" onclick="addNumber('2')">2</button>
-    <button class="btn" onclick="addNumber('3')">3</button>
-    <button class="btn operator" onclick="addOperator('+')">+</button>
-
-    <button class="btn operator" onclick="addNumber('00')">00</button>
-    <button class="btn" onclick="addNumber('0')">0</button>
-    <button class="btn" onclick="addNumber('.')">.</button>
-    <button class="btn equal" onclick="calculate()">=</button>
-
-  </div>
-
-</div>
-
-
-<!-- CONVERTER LIST -->
-<div class="converter" id="converter">
-
-  <div class="converterGrid">
-
-    <div class="converterItem" onclick="openConverter('Currency')">
-      <div class="icon">💱</div>
-      <span>Currency</span>
+    <div class="card">
+      <h3>🌐 Internet Speed / Latency Test</h3>
+      <p class="muted">ইন্টারনেটে পৌঁছানো যাচ্ছে কি না এবং আনুমানিক প্রতিক্রিয়া সময় পরীক্ষা করুন।</p>
+      <button id="testBtn" onclick="runTest()">ইন্টারনেট পরীক্ষা করুন</button>
+      <div id="testResult" class="muted" style="margin-top:14px"></div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Length')">
-      <div class="icon">📏</div>
-      <span>Length</span>
+    <div class="info">
+      নিরাপত্তা নোট: এই ওয়েবসাইট অন্যের Wi-Fi পাসওয়ার্ড বের করে না এবং অনুমতি ছাড়া নেটওয়ার্কে প্রবেশ করে না।
+    </div>
+  </section>
+
+  <section id="wifi" class="page">
+    <h2>📶 Wi-Fi Scanner</h2>
+    <p class="muted">Wi-Fi সংযোগের অবস্থা</p>
+
+    <div class="card">
+      <div class="row"><span>ইন্টারনেট সংযোগ</span><span id="wifiOnline">—</span></div>
+      <div class="row"><span>সংযোগের ধরন</span><span id="wifiType">—</span></div>
+      <div class="row"><span>Wi-Fi নেটওয়ার্কের নাম</span><span>ব্রাউজার থেকে অনুপলভ্য</span></div>
+      <div class="row"><span>সিগন্যাল শক্তি</span><span>ব্রাউজার থেকে অনুপলভ্য</span></div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Mass')">
-      <div class="icon">⚖️</div>
-      <span>Mass</span>
+    <div class="info">
+      গুরুত্বপূর্ণ: সাধারণ মোবাইল ব্রাউজার আশেপাশের সব Wi-Fi-এর নাম ও সিগন্যাল শক্তি স্ক্যান করতে পারে না। এই তথ্যের জন্য উপযুক্ত অনুমতিসহ Android অ্যাপ লাগবে।
     </div>
 
-    <div class="converterItem" onclick="openConverter('Area')">
-      <div class="icon">▣</div>
-      <span>Area</span>
+    <button onclick="refreshInfo()">সংযোগের তথ্য আপডেট করুন</button>
+  </section>
+
+  <section id="mobile" class="page">
+    <h2>📡 Mobile Network Scanner</h2>
+    <p class="muted">ব্রাউজার যে নেটওয়ার্ক তথ্য দিতে পারে</p>
+
+    <div class="card">
+      <div class="row"><span>ইন্টারনেট সংযোগ</span><span id="mobOnline">—</span></div>
+      <div class="row"><span>সংযোগের ধরন</span><span id="mobType">—</span></div>
+      <div class="row"><span>আনুমানিক ডাউনলিংক</span><span id="mobDown">—</span></div>
+      <div class="row"><span>আনুমানিক RTT</span><span id="mobRtt">—</span></div>
+      <div class="row"><span>SIM অপারেটর</span><span>ব্রাউজার থেকে অনুপলভ্য</span></div>
+      <div class="row"><span>4G / 5G নিশ্চিতকরণ</span><span id="mobCell">নিশ্চিত করা যায় না</span></div>
     </div>
 
-    <div class="converterItem" onclick="openConverter('Time')">
-      <div class="icon">◷</div>
-      <span>Time</span>
+    <div class="info">
+      Android ও Chrome-এর সংস্করণভেদে কিছু তথ্য পাওয়া নাও যেতে পারে। এই তথ্য দিয়ে প্রকৃত মোবাইল টাওয়ার, SIM অপারেটর বা সেলুলার সিগন্যালের dBm নিশ্চিত করা সম্ভব নয়।
     </div>
 
-    <div class="converterItem" onclick="openConverter('Data')">
-      <div class="icon">💾</div>
-      <span>Data</span>
-    </div>
+    <button onclick="refreshInfo()">মোবাইল নেটওয়ার্ক আপডেট</button>
+  </section>
 
-    <div class="converterItem" onclick="openConverter('Discount')">
-      <div class="icon">🏷️</div>
-      <span>Discount</span>
-    </div>
+  <section id="history" class="page">
+    <h2>📋 Test History</h2>
+    <p class="muted">এই ব্রাউজারে সংরক্ষিত পরীক্ষার ফলাফল</p>
+    <div id="historyList" class="card"></div>
+    <button class="danger" onclick="clearHistory()">সব History মুছুন</button>
+  </section>
+</main>
 
-    <div class="converterItem" onclick="openConverter('Volume')">
-      <div class="icon">⬡</div>
-      <span>Volume</span>
-    </div>
-
-    <div class="converterItem" onclick="openConverter('Numeral System')">
-      <div class="icon">🔢</div>
-      <span>Numeral System</span>
-    </div>
-
-    <div class="converterItem" onclick="openConverter('Speed')">
-      <div class="icon">◉</div>
-      <span>Speed</span>
-    </div>
-
-    <div class="converterItem" onclick="openConverter('Temperature')">
-      <div class="icon">🌡️</div>
-      <span>Temperature</span>
-    </div>
-
-    <div class="converterItem" onclick="openConverter('BMI')">
-      <div class="icon">⚖</div>
-      <span>BMI</span>
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- CONVERTER SCREEN -->
-<div class="converterScreen" id="converterScreen">
-
-  <div class="back" onclick="backToConverters()">←</div>
-
-  <div class="converterTitle" id="converterTitle">
-    Converter
-  </div>
-
-  <div id="converterInputs"></div>
-
-  <button class="convertBtn" onclick="doConvert()">
-    Convert
-  </button>
-
-  <div class="convertResult" id="convertResult">
-    Result will appear here
-  </div>
-
-</div>
-
-
-<!-- HISTORY -->
-<div class="history" id="history">
-
-  <div class="historyHeader">
-
-    <h2>History</h2>
-
-    <div class="deleteHistory" onclick="clearHistory()">
-      🗑️
-    </div>
-
-  </div>
-
-  <div id="historyList"></div>
-
-</div>
-
-</div>
-
+<footer>ASHRAF ALI EMON · Network Tools</footer>
 
 <script>
+const $ = id => document.getElementById(id);
 
-/* =========================
-   CALCULATOR
-========================= */
-
-let current = "";
-let previous = "";
-let operator = "";
-
-const result = document.getElementById("result");
-const expression = document.getElementById("expression");
-
-function addNumber(num){
-
-  if(num === "." && current.includes(".")) return;
-
-  current += num;
-
-  result.innerText = current;
-}
-
-function addOperator(op){
-
-  if(current === "" && previous === "") return;
-
-  if(current !== ""){
-
-    if(previous !== ""){
-      calculate();
-    }
-
-    previous = current;
-    current = "";
-
-  }
-
-  operator = op;
-
-  expression.innerText =
-    previous + " " + displayOperator(op);
-}
-
-function displayOperator(op){
-
-  if(op === "*") return "×";
-  if(op === "/") return "÷";
-  if(op === "-") return "−";
-
-  return op;
-}
-
-function calculate(){
-
-  if(previous === "" || current === "" || operator === "") return;
-
-  let a = parseFloat(previous);
-  let b = parseFloat(current);
-  let answer;
-
-  if(operator === "+") answer = a + b;
-  if(operator === "-") answer = a - b;
-  if(operator === "*") answer = a * b;
-  if(operator === "/"){
-
-    if(b === 0){
-      result.innerText = "Error";
-      return;
-    }
-
-    answer = a / b;
-  }
-
-  let exp =
-    previous + " " +
-    displayOperator(operator) + " " +
-    current;
-
-  expression.innerText = exp + " =";
-
-  result.innerText = formatNumber(answer);
-
-  saveHistory(exp + " = " + formatNumber(answer));
-
-  current = String(answer);
-  previous = "";
-  operator = "";
-}
-
-function formatNumber(num){
-
-  if(!isFinite(num)) return "Error";
-
-  return Number(num.toFixed(12)).toLocaleString("en-US",{
-    maximumFractionDigits:12
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.toggle("active",p.id===id);
   });
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===id);
+  });
+  if(id==="history") renderHistory();
+  if(id==="wifi"||id==="mobile") refreshInfo();
 }
 
-function clearCalc(){
+document.querySelectorAll("nav button").forEach(b=>{
+  b.addEventListener("click",()=>showPage(b.dataset.page));
+});
 
-  current = "";
-  previous = "";
-  operator = "";
-
-  expression.innerText = "";
-  result.innerText = "0";
+function getConnection(){
+  return navigator.connection ||
+         navigator.mozConnection ||
+         navigator.webkitConnection ||
+         null;
 }
 
-function backspace(){
+function refreshInfo(){
+  const online=navigator.onLine;
+  const conn=getConnection();
 
-  current = current.slice(0,-1);
+  $("dot").className="dot "+(online?"good":"bad");
+  $("connectionStatus").textContent=online
+    ?"ডিভাইস অনলাইন":"ডিভাইস অফলাইন";
+  $("connectionDetail").textContent=online
+    ?"ইন্টারনেট পরীক্ষা করে আরও তথ্য দেখুন"
+    :"আপনার ডিভাইস ইন্টারনেট সংযুক্ত নয়";
 
-  result.innerText = current || "0";
+  $("wifiOnline").textContent=online?"অনলাইন":"অফলাইন";
+  $("mobOnline").textContent=online?"অনলাইন":"অফলাইন";
+  $("wifiSummary").textContent=online
+    ?"ইন্টারনেট সংযুক্ত":"ইন্টারনেট সংযুক্ত নয়";
+  $("mobileSummary").textContent=online
+    ?"অনলাইন":"অফলাইন";
+
+  const type=conn && conn.type ? conn.type : "তথ্য পাওয়া যায়নি";
+  const effective=conn && conn.effectiveType
+    ? conn.effectiveType : "তথ্য পাওয়া যায়নি";
+
+  $("wifiType").textContent=type;
+  $("mobType").textContent=effective;
+  $("mobDown").textContent=conn && Number.isFinite(conn.downlink)
+    ? conn.downlink+" Mbps":"অনুপলভ্য";
+  $("mobRtt").textContent=conn && Number.isFinite(conn.rtt)
+    ? conn.rtt+" ms":"অনুপলভ্য";
+
+  $("mobCell").textContent=conn && conn.type
+    ? "ব্রাউজার-প্রদত্ত সংযোগের ধরন; 4G/5G নিশ্চিত নয়"
+    : "তথ্য পাওয়া যায়নি";
 }
-
-function percentage(){
-
-  if(current !== ""){
-
-    let old = current;
-
-    current = String(parseFloat(current)/100);
-
-    result.innerText = current;
-
-    saveHistory(old + "% = " + current);
-  }
-}
-
-
-/* =========================
-   HISTORY
-========================= */
 
 function getHistory(){
-
-  return JSON.parse(localStorage.getItem("calculatorHistory") || "[]");
-
+  try{
+    return JSON.parse(localStorage.getItem("emonNetworkHistory")||"[]");
+  }catch(e){return [];}
 }
 
-function saveHistory(text){
-
-  let history = getHistory();
-
-  history.unshift({
-    text:text,
+function saveHistory(title,result){
+  const items=getHistory();
+  items.unshift({
+    title:title,
+    result:result,
     date:new Date().toLocaleString()
   });
-
-  if(history.length > 100){
-    history.pop();
-  }
-
-  localStorage.setItem(
-    "calculatorHistory",
-    JSON.stringify(history)
-  );
-
-}
-
-function showHistory(){
-
-  document.getElementById("menuBox").style.display="none";
-
-  document.getElementById("calculator").style.display="none";
-  document.getElementById("converter").style.display="none";
-  document.getElementById("converterScreen").style.display="none";
-  document.getElementById("history").style.display="block";
-
-  renderHistory();
-
+  try{
+    localStorage.setItem("emonNetworkHistory",JSON.stringify(items.slice(0,50)));
+  }catch(e){}
 }
 
 function renderHistory(){
-
-  let list = document.getElementById("historyList");
-
-  let history = getHistory();
-
-  if(history.length === 0){
-
-    list.innerHTML =
-      '<div class="empty">No calculation history</div>';
-
+  const items=getHistory();
+  const list=$("historyList");
+  if(!items.length){
+    list.textContent="এখনও কোনো পরীক্ষার ফলাফল সংরক্ষিত নেই।";
     return;
   }
-
-  list.innerHTML = history.map(item => `
-
-    <div class="historyItem">
-
-      <div class="historyDate">
-        ${item.date}
-      </div>
-
-      ${item.text}
-
-    </div>
-
-  `).join("");
-
+  list.replaceChildren();
+  items.forEach(item=>{
+    const div=document.createElement("div");
+    div.className="history-item";
+    const title=document.createElement("strong");
+    title.textContent=item.title;
+    const result=document.createElement("div");
+    result.textContent=item.result;
+    const date=document.createElement("div");
+    date.className="muted";
+    date.textContent=item.date;
+    div.append(title,result,date);
+    list.append(div);
+  });
 }
 
 function clearHistory(){
-
-  if(confirm("Delete all history?")){
-
-    localStorage.removeItem("calculatorHistory");
-
+  if(confirm("আপনি কি সব পরীক্ষার History মুছে ফেলতে চান?")){
+    localStorage.removeItem("emonNetworkHistory");
     renderHistory();
-
   }
-
 }
 
+async function runTest(){
+  const btn=$("testBtn");
+  const result=$("testResult");
+  btn.disabled=true;
+  result.textContent="ইন্টারনেট পরীক্ষা করা হচ্ছে...";
+  const start=performance.now();
 
-/* =========================
-   MAIN NAVIGATION
-========================= */
+  try{
+    if(!navigator.onLine) throw new Error("ডিভাইস অফলাইন");
 
-function showCalculator(){
+    await fetch("https://www.gstatic.com/generate_204",{
+      mode:"no-cors",
+      cache:"no-store"
+    });
 
-  document.getElementById("calculator").style.display="block";
-
-  document.getElementById("converter").style.display="none";
-
-  document.getElementById("converterScreen").style.display="none";
-
-  document.getElementById("history").style.display="none";
-
-  document.getElementById("calculatorTab").classList.add("active");
-
-  document.getElementById("converterTab").classList.remove("active");
-
+    const elapsed=Math.round(performance.now()-start);
+    const message="পরীক্ষার ঠিকানায় পৌঁছানো গেছে। আনুমানিক সময়: "+elapsed+" ms";
+    result.textContent=message;
+    saveHistory("Internet Test",message);
+  }catch(e){
+    const message="পরীক্ষা ব্যর্থ হয়েছে। ইন্টারনেট, DNS বা সংযোগ পরীক্ষা করুন।";
+    result.textContent=message;
+    saveHistory("Internet Test",message);
+  }finally{
+    btn.disabled=false;
+    refreshInfo();
+  }
 }
 
-function showConverter(){
+window.addEventListener("online",refreshInfo);
+window.addEventListener("offline",refreshInfo);
 
-  document.getElementById("calculator").style.display="none";
-
-  document.getElementById("converter").style.display="block";
-
-  document.getElementById("converterScreen").style.display="none";
-
-  document.getElementById("history").style.display="none";
-
-  document.getElementById("calculatorTab").classList.remove("active");
-
-  document.getElementById("converterTab").classList.add("active");
-
+if(getConnection() && getConnection().addEventListener){
+  getConnection().addEventListener("change",refreshInfo);
 }
 
-function toggleMenu(){
-
-  let menu = document.getElementById("menuBox");
-
-  menu.style.display =
-    menu.style.display === "block"
-    ? "none"
-    : "block";
-
-}
-
-
-/* =========================
-   CONVERTER
-========================= */
-
-let activeConverter = "";
-
-function openConverter(type){
-
-  activeConverter = type;
-
-  document.getElementById("converter").style.display="none";
-
-  document.getElementById("converterScreen").style.display="block";
-
-  document.getElementById("converterTitle").innerText = type;
-
-  createInputs(type);
-
-}
-
-function backToConverters(){
-
-  document.getElementById("converterScreen").style.display="none";
-
-  document.getElementById("converter").style.display="block";
-
-}
-
-function createInputs(type){
-
-  let box = document.getElementById("converterInputs");
-
-  if(type === "Temperature"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Value</label>
-        <input id="value1" type="number" placeholder="Enter value">
-      </div>
-
-      <div class="inputBox">
-        <label>From</label>
-        <select id="fromUnit">
-          <option value="C">Celsius</option>
-          <option value="F">Fahrenheit</option>
-          <option value="K">Kelvin</option>
-        </select>
-      </div>
-
-      <div class="inputBox">
-        <label>To</label>
-        <select id="toUnit">
-          <option value="C">Celsius</option>
-          <option value="F">Fahrenheit</option>
-          <option value="K">Kelvin</option>
-        </select>
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  if(type === "BMI"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Weight (kg)</label>
-        <input id="weight" type="number">
-      </div>
-
-      <div class="inputBox">
-        <label>Height (cm)</label>
-        <input id="height" type="number">
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  let units = {
-
-    "Length":[
-      ["Meter","m"],
-      ["Kilometer","km"],
-      ["Centimeter","cm"],
-      ["Millimeter","mm"],
-      ["Mile","mile"],
-      ["Foot","ft"],
-      ["Inch","inch"]
-    ],
-
-    "Mass":[
-      ["Kilogram","kg"],
-      ["Gram","g"],
-      ["Milligram","mg"],
-      ["Pound","lb"],
-      ["Ounce","oz"]
-    ],
-
-    "Area":[
-      ["Square meter","m2"],
-      ["Square kilometer","km2"],
-      ["Square foot","ft2"],
-      ["Acre","acre"]
-    ],
-
-    "Time":[
-      ["Second","sec"],
-      ["Minute","min"],
-      ["Hour","hour"],
-      ["Day","day"],
-      ["Week","week"]
-    ],
-
-    "Data":[
-      ["Byte","B"],
-      ["Kilobyte","KB"],
-      ["Megabyte","MB"],
-      ["Gigabyte","GB"],
-      ["Terabyte","TB"]
-    ],
-
-    "Volume":[
-      ["Liter","L"],
-      ["Milliliter","mL"],
-      ["Cubic meter","m3"],
-      ["Gallon","gal"]
-    ],
-
-    "Speed":[
-      ["m/s","ms"],
-      ["km/h","kmh"],
-      ["mph","mph"]
-    ]
-
-  };
-
-  if(units[type]){
-
-    let options = units[type].map(
-      u => `<option value="${u[1]}">${u[0]}</option>`
-    ).join("");
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Value</label>
-        <input id="value1" type="number" placeholder="Enter value">
-      </div>
-
-      <div class="inputBox">
-        <label>From</label>
-        <select id="fromUnit">
-          ${options}
-        </select>
-      </div>
-
-      <div class="inputBox">
-        <label>To</label>
-        <select id="toUnit">
-          ${options}
-        </select>
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  if(type === "Discount"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Original Price</label>
-        <input id="price" type="number">
-      </div>
-
-      <div class="inputBox">
-        <label>Discount (%)</label>
-        <input id="discount" type="number">
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  if(type === "Numeral System"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Number</label>
-        <input id="value1" type="text">
-      </div>
-
-      <div class="inputBox">
-        <label>From Base</label>
-        <select id="fromBase">
-          <option value="2">Binary</option>
-          <option value="8">Octal</option>
-          <option value="10" selected>Decimal</option>
-          <option value="16">Hexadecimal</option>
-        </select>
-      </div>
-
-      <div class="inputBox">
-        <label>To Base</label>
-        <select id="toBase">
-          <option value="2">Binary</option>
-          <option value="8">Octal</option>
-          <option value="10">Decimal</option>
-          <option value="16">Hexadecimal</option>
-        </select>
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  if(type === "Currency"){
-
-    box.innerHTML = `
-
-      <div class="inputBox">
-        <label>Amount</label>
-        <input id="value1" type="number">
-      </div>
-
-      <div class="inputBox">
-        <label>From</label>
-        <select id="fromCurrency">
-          <option value="BDT">Bangladesh Taka</option>
-          <option value="USD">US Dollar</option>
-          <option value="EUR">Euro</option>
-          <option value="GBP">British Pound</option>
-        </select>
-      </div>
-
-      <div class="inputBox">
-        <label>To</label>
-        <select id="toCurrency">
-          <option value="BDT">Bangladesh Taka</option>
-          <option value="USD">US Dollar</option>
-          <option value="EUR">Euro</option>
-          <option value="GBP">British Pound</option>
-        </select>
-      </div>
-
-    `;
-
-    return;
-  }
-
-}
-
-
-/* =========================
-   CONVERSION
-========================= */
-
-function doConvert(){
-
-  let type = activeConverter;
-
-  if(type === "BMI"){
-
-    let weight = parseFloat(
-      document.getElementById("weight").value
-    );
-
-    let height = parseFloat(
-      document.getElementById("height").value
-    );
-
-    if(!weight || !height) return;
-
-    let h = height / 100;
-
-    let bmi = weight / (h*h);
-
-    let status =
-      bmi < 18.5 ? "Underweight" :
-      bmi < 25 ? "Normal" :
-      bmi < 30 ? "Overweight" :
-      "Obese";
-
-    document.getElementById("convertResult").innerText =
-      "BMI: " + bmi.toFixed(2) + " — " + status;
-
-    return;
-  }
-
-
-  if(type === "Discount"){
-
-    let price =
-      parseFloat(document.getElementById("price").value);
-
-    let discount =
-      parseFloat(document.getElementById("discount").value);
-
-    if(isNaN(price) || isNaN(discount)) return;
-
-    let saving = price * discount / 100;
-
-    let finalPrice = price - saving;
-
-    document.getElementById("convertResult").innerText =
-      "You save: " + saving.toFixed(2) +
-      " | Final price: " + finalPrice.toFixed(2);
-
-    return;
-  }
-
-
-  if(type === "Numeral System"){
-
-    let value =
-      document.getElementById("value1").value.trim();
-
-    let from =
-      parseInt(document.getElementById("fromBase").value);
-
-    let to =
-      parseInt(document.getElementById("toBase").value);
-
-    try{
-
-      let decimal = parseInt(value,from);
-
-      if(isNaN(decimal)) throw "error";
-
-      let answer = decimal.toString(to).toUpperCase();
-
-      document.getElementById("convertResult").innerText =
-        answer;
-
-    }catch(e){
-
-      document.getElementById("convertResult").innerText =
-        "Invalid number";
-
-    }
-
-    return;
-  }
-
-
-  if(type === "Temperature"){
-
-    let value =
-      parseFloat(document.getElementById("value1").value);
-
-    let from =
-      document.getElementById("fromUnit").value;
-
-    let to =
-      document.getElementById("toUnit").value;
-
-    if(isNaN(value)) return;
-
-    let c;
-
-    if(from === "C") c=value;
-    if(from === "F") c=(value-32)*5/9;
-    if(from === "K") c=value-273.15;
-
-    let answer;
-
-    if(to === "C") answer=c;
-    if(to === "F") answer=c*9/5+32;
-    if(to === "K") answer=c+273.15;
-
-    document.getElementById("convertResult").innerText =
-      answer.toFixed(4);
-
-    return;
-  }
-
-
-  if(type === "Currency"){
-
-    let amount =
-      parseFloat(document.getElementById("value1").value);
-
-    let from =
-      document.getElementById("fromCurrency").value;
-
-    let to =
-      document.getElementById("toCurrency").value;
-
-    /*
-      Example rates.
-      এগুলো পরে live currency API দিয়ে
-      পরিবর্তন করা যাবে।
-    */
-
-    let rates = {
-      BDT:1,
-      USD:120,
-      EUR:140,
-      GBP:165
-    };
-
-    if(isNaN(amount)) return;
-
-    let bdt = amount * rates[from];
-
-    let answer = bdt / rates[to];
-
-    document.getElementById("convertResult").innerText =
-      answer.toFixed(4) + " " + to;
-
-    return;
-  }
-
-
-  let value =
-    parseFloat(document.getElementById("value1").value);
-
-  let from =
-    document.getElementById("fromUnit").value;
-
-  let to =
-    document.getElementById("toUnit").value;
-
-  if(isNaN(value)) return;
-
-  let answer = convertUnits(type,value,from,to);
-
-  document.getElementById("convertResult").innerText =
-    answer.toFixed(6);
-
-}
-
-
-function convertUnits(type,value,from,to){
-
-  if(type === "Length"){
-
-    let r = {
-      m:1,
-      km:1000,
-      cm:.01,
-      mm:.001,
-      mile:1609.344,
-      ft:.3048,
-      inch:.0254
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Mass"){
-
-    let r = {
-      kg:1,
-      g:.001,
-      mg:.000001,
-      lb:.45359237,
-      oz:.0283495
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Area"){
-
-    let r = {
-      m2:1,
-      km2:1000000,
-      ft2:.092903,
-      acre:4046.856
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Time"){
-
-    let r = {
-      sec:1,
-      min:60,
-      hour:3600,
-      day:86400,
-      week:604800
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Data"){
-
-    let r = {
-      B:1,
-      KB:1024,
-      MB:1024**2,
-      GB:1024**3,
-      TB:1024**4
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Volume"){
-
-    let r = {
-      L:1,
-      mL:.001,
-      m3:1000,
-      gal:3.78541
-    };
-
-    return value*r[from]/r[to];
-  }
-
-
-  if(type === "Speed"){
-
-    let r = {
-      ms:1,
-      kmh:1/3.6,
-      mph:.44704
-    };
-
-    return value*r[from]/r[to];
-  }
-
-  return value;
-
-}
-
-
-/* KEYBOARD SUPPORT */
-
-document.addEventListener("keydown",function(e){
-
-  if(/[0-9.]/.test(e.key)){
-    addNumber(e.key);
-  }
-
-  if(["+","-","*","/"].includes(e.key)){
-    addOperator(e.key);
-  }
-
-  if(e.key === "Enter"){
-    calculate();
-  }
-
-  if(e.key === "Backspace"){
-    backspace();
-  }
-
-  if(e.key === "Escape"){
-    clearCalc();
-  }
-
-});
-
+refreshInfo();
+renderHistory();
 </script>
-
 </body>
-      </html>
+</html>
